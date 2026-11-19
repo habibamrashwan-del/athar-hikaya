@@ -1919,5 +1919,74 @@
 
         renderAll();
     </script>
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    onSnapshot
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgTO5r1Xd0tYR9k8Q0Hxqgcm9Zchi13K8",
+    authDomain: "athar-hikaya-2c764.firebaseapp.com",
+    projectId: "athar-hikaya-2c764",
+    storageBucket: "athar-hikaya-2c764.firebasestorage.app",
+    messagingSenderId: "874460598774",
+    appId: "1:874460598774:web:c4ea12475cea658f2bf7d7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const cloudDocRef = doc(db, "encyclopedia", "main_data");
+
+  let isApplyingCloudUpdate = false;
+  const originalSaveToStorage = typeof saveToStorage === "function" ? saveToStorage : null;
+
+  async function pushDataToCloud() {
+    if (isApplyingCloudUpdate) return;
+    try {
+      await setDoc(cloudDocRef, {
+        halls: typeof halls !== "undefined" ? halls : [],
+        figures: typeof figures !== "undefined" ? figures : [],
+        updatedAt: Date.now()
+      }, { merge: true });
+    } catch (err) {
+      console.error("Cloud sync error:", err);
+    }
+  }
+
+  if (originalSaveToStorage) {
+    window.saveToStorage = function (...args) {
+      const result = originalSaveToStorage.apply(this, args);
+      pushDataToCloud();
+      return result;
+    };
+  }
+
+  onSnapshot(cloudDocRef, (snapshot) => {
+    if (!snapshot.exists()) return;
+    const data = snapshot.data();
+    isApplyingCloudUpdate = true;
+    try {
+      let changed = false;
+      if (Array.isArray(data.halls) && typeof halls !== "undefined") {
+        halls = data.halls;
+        changed = true;
+      }
+      if (Array.isArray(data.figures) && typeof figures !== "undefined") {
+        figures = data.figures;
+        changed = true;
+      }
+      if (changed) {
+        if (originalSaveToStorage) originalSaveToStorage();
+        if (typeof renderAll === "function") renderAll();
+      }
+    } finally {
+      isApplyingCloudUpdate = false;
+    }
+  });
+</script>
 </body>
 </html>
