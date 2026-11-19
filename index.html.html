@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أثر وحكاية | Athar & Hikaya - موسوعة المرشد الأثرية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        ruqaa: ['Aref Ruqaa', 'serif'],
+                        amiri: ['Amiri', 'serif'],
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        papyrus: '#F8F5EE',
+                        papyrusDark: '#EFECE6',
+                        obsidian: '#2C2A29',
+                        gold: '#C5A059',
+                        goldLight: '#E5C98B',
+                        lapis: '#1D3557'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #F8F5EE;
+            color: #2C2A29;
+            background-image: radial-gradient(#C5A059 0.4px, transparent 0.4px);
+            background-size: 24px 24px;
+        }
+        .font-title { font-family: 'Aref Ruqaa', serif; }
+        .font-classic { font-family: 'Amiri', serif; }
+        .cartouche-border {
+            border: 2px solid #C5A059;
+            border-radius: 9999px;
+            box-shadow: inset 0 0 0 2px #F8F5EE, inset 0 0 0 3px #C5A059;
+        }
+        .pharaonic-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pharaonic-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to left, #C5A059, transparent);
+        }
+        [dir="ltr"] .pharaonic-divider::after {
+            background: linear-gradient(to right, #C5A059, transparent);
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #EFECE6; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
+
+    <!-- القائمة الجانبية للكمبيوتر -->
+    <aside class="hidden lg:flex lg:w-72 lg:flex-col lg:fixed lg:inset-y-0 lg:right-0 bg-[#EFECE6] border-l border-amber-900/15 z-40 justify-between p-5 shadow-sm">
+        <div class="space-y-6">
+            <div class="flex items-start gap-3 pb-4 border-b border-amber-900/10">
+                <div class="w-11 h-11 rounded-full bg-obsidian text-goldLight flex items-center justify-center font-title text-xl font-bold shrink-0 shadow border border-gold">أ</div>
+                <div>
+                    <h1 id="side-title" class="font-title text-xl font-bold text-obsidian">أثر وحكاية</h1>
+                    <p id="side-subtitle" class="text-[11px] text-gray-600 leading-relaxed mt-0.5">موسوعة بطاقات أثرية لملوك مصر وملكاتها وكبار رجال الدولة</p>
+                </div>
+            </div>
+
+            <nav class="space-y-1.5 text-sm font-semibold">
+                <button onclick="switchTab('home')" id="side-nav-home" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-obsidian text-goldLight shadow transition">
+                    <i class="fa-solid fa-house w-5 text-center"></i>
+                    <span data-i18n="navHome">الرئيسية</span>
+                </button>
+                <button onclick="switchTab('halls')" id="side-nav-halls" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-900/10 transition">
+                    <i class="fa-solid fa-landmark w-5 text-center"></i>
+                    <span data-i18n="navHalls">القاعات</span>
+                </button>
+                <button onclick="switchTab('encyclopedia')" id="side-nav-encyclopedia" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-900/10 transition">
+                    <i class="fa-solid fa-border-all w-5 text-center"></i>
+                    <span data-i18n="navEncyclopedia">الموسوعة</span>
+                </button>
+                <button onclick="switchTab('timeline')" id="side-nav-timeline" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-900/10 transition">
+                    <i class="fa-solid fa-hourglass-half w-5 text-center"></i>
+                    <span data-i18n="navTimeline">الخط الزمني</span>
+                </button>
+                <!-- مخفي تماماً إلا للمالك بعد إدخال كلمة المرور -->
+                <button onclick="checkOwnerAction(() => openAddModal())" id="side-nav-add" class="owner-only hidden w-full flex items-center gap-3 px-4 py-3 rounded-xl text-amber-900 bg-amber-500/10 hover:bg-amber-500/20 transition">
+                    <i class="fa-solid fa-plus w-5 text-center"></i>
+                    <span data-i18n="navAdd">إضافة شخصية</span>
+                </button>
+                <button onclick="switchTab('about')" id="side-nav-about" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-900/10 transition">
+                    <i class="fa-solid fa-circle-info w-5 text-center"></i>
+                    <span data-i18n="navAbout">عن الموسوعة</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="space-y-3 pt-4 border-t border-amber-900/10">
+            <div class="bg-papyrus p-1 rounded-xl flex justify-between text-xs border border-amber-900/15">
+                <button onclick="setLang('ar')" id="desk-btn-ar" class="flex-1 py-1.5 rounded-lg bg-obsidian text-goldLight font-bold transition">AR</button>
+                <button onclick="setLang('en')" id="desk-btn-en" class="flex-1 py-1.5 rounded-lg text-gray-700 font-semibold transition">EN</button>
+                <button onclick="setLang('dual')" id="desk-btn-dual" class="flex-1 py-1.5 rounded-lg text-gray-700 font-semibold transition">AR+EN</button>
+            </div>
+            <button onclick="openProfileModal()" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-papyrus hover:bg-amber-900/5 border border-amber-900/15 transition">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-obsidian text-goldLight flex items-center justify-center text-xs font-bold">H</div>
+                    <span class="text-xs font-bold text-gray-800" data-i18n="ownerManage">إدارة المالك (حبيبة)</span>
+                </div>
+                <i class="fa-solid fa-lock text-gold text-xs"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- الشريط العلوي للموبايل -->
+    <header class="lg:hidden bg-papyrus/95 backdrop-blur border-b border-amber-900/15 sticky top-0 z-40 px-4 py-3 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-2.5" onclick="switchTab('home')">
+            <div class="w-9 h-9 rounded-full bg-obsidian flex items-center justify-center text-goldLight font-bold text-base font-title shadow border border-gold">أ</div>
+            <h1 id="mob-title" class="font-title text-lg font-bold text-obsidian">أثر وحكاية</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="bg-papyrusDark p-1 rounded-xl flex gap-1 text-[11px] border border-amber-900/15">
+                <button onclick="setLang('ar')" id="mob-btn-ar" class="px-2 py-1 rounded-lg bg-obsidian text-goldLight font-bold transition">AR</button>
+                <button onclick="setLang('en')" id="mob-btn-en" class="px-2 py-1 rounded-lg text-gray-700 font-semibold transition">EN</button>
+                <button onclick="setLang('dual')" id="mob-btn-dual" class="px-2 py-1 rounded-lg text-gray-700 font-semibold transition">AR+EN</button>
+            </div>
+            <button onclick="openProfileModal()" class="w-9 h-9 rounded-full bg-obsidian text-goldLight flex items-center justify-center text-xs font-bold shadow border border-gold"><i class="fa-solid fa-lock text-xs"></i></button>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-1 lg:mr-72 w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+
+        <!-- 1. الصفحة الرئيسية -->
+        <section id="page-home" class="space-y-8">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-obsidian text-papyrus min-h-[340px] flex items-center border border-gold/40">
+                <img id="hero-bg-img" src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1400&q=80" alt="معبد فرعوني" class="absolute inset-0 w-full h-full object-cover opacity-35">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#1B1918] via-[#2C2A29]/80 to-[#1D3557]/70"></div>
+                
+                <button onclick="checkOwnerAction(() => changeHeroCover())" class="owner-only hidden absolute top-4 left-4 z-20 bg-black/60 hover:bg-black/80 text-goldLight text-xs px-3 py-1.5 rounded-full border border-gold/40 flex items-center gap-1.5 backdrop-blur">
+                    <i class="fa-solid fa-camera"></i>
+                    <span data-i18n="changeCover">صورة الغلاف</span>
+                </button>
+
+                <div class="relative z-10 p-6 sm:p-10 w-full max-w-3xl space-y-5">
+                    <span class="inline-flex items-center gap-1.5 bg-gold/20 text-goldLight px-3.5 py-1 rounded-full text-xs font-semibold border border-gold/30">
+                        <i class="fa-solid fa-ankh text-[10px]"></i>
+                        <span data-i18n="heroTag">من ما قبل الأسرات إلى العصر الروماني</span>
+                    </span>
+                    <h2 data-i18n="heroHeading" class="font-title text-3xl sm:text-5xl font-bold text-white leading-tight">لكل أثرٍ حكاية، ولكل اسمٍ أثر</h2>
+                    <p data-i18n="heroDesc" class="text-xs sm:text-sm text-gray-200 leading-relaxed max-w-2xl">
+                        بطاقة هوية أثرية لكل ملك وملكة وكبار رجال الدولة من وزراء ومهندسين وكهنة: قصته، أسماؤه الخمسة، عائلته، مقبرته، معابده وأماكنه الأثرية، وأثره مع مكان عرضه في المتاحف.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+                        <div class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-gray-400 text-sm"></i>
+                            <input type="text" id="home-search-input" onkeyup="handleHomeSearch(event)" placeholder="ابحث باسم ملك أو وزير أو معبد أو أثر أو متحف..." class="w-full bg-papyrus text-obsidian rounded-xl py-2.5 pr-10 pl-4 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-gold shadow">
+                        </div>
+                        <button onclick="switchTab('encyclopedia')" data-i18n="browseBtn" class="bg-gold hover:bg-amber-600 text-obsidian font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition shrink-0">
+                            تصفح الموسوعة
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 pt-3 border-t border-white/15 max-w-md">
+                        <div>
+                            <div id="stat-figures" class="text-2xl sm:text-3xl font-bold text-goldLight font-classic">6</div>
+                            <div data-i18n="statFigures" class="text-[11px] text-gray-300">شخصية موثقة</div>
+                        </div>
+                        <div>
+                            <div id="stat-eras" class="text-2xl sm:text-3xl font-bold text-goldLight font-classic">4</div>
+                            <div data-i18n="statEras" class="text-[11px] text-gray-300">عصور تاريخية</div>
+                        </div>
+                        <div>
+                            <div id="stat-artifacts" class="text-2xl sm:text-3xl font-bold text-goldLight font-classic">13</div>
+                            <div data-i18n="statArtifacts" class="text-[11px] text-gray-300">أثراً ومقبرة ومعبداً</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شريط العصور -->
+            <div class="space-y-3">
+                <div class="pharaonic-divider">
+                    <h3 class="font-title text-lg font-bold text-obsidian flex items-center gap-2">
+                        <i class="fa-solid fa-hourglass text-gold text-sm"></i>
+                        <span data-i18n="erasSectionTitle">العصور</span>
+                    </h3>
+                </div>
+                <div id="home-eras-strip" class="flex gap-3 overflow-x-auto pb-2"></div>
+            </div>
+
+            <!-- قاعات المتحف المصغرة -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <div class="pharaonic-divider flex-1">
+                        <h3 class="font-title text-lg font-bold text-obsidian flex items-center gap-2">
+                            <i class="fa-solid fa-landmark text-gold text-sm"></i>
+                            <span data-i18n="hallsSectionTitle">قاعات المتحف</span>
+                        </h3>
+                    </div>
+                    <button onclick="switchTab('halls')" class="text-xs font-bold text-amber-900 hover:underline mr-3" data-i18n="allHalls">كل القاعات ←</button>
+                </div>
+                <div id="home-halls-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+            </div>
+
+            <!-- بطاقات مختارة -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <div class="pharaonic-divider flex-1">
+                        <h3 class="font-title text-lg font-bold text-obsidian flex items-center gap-2">
+                            <i class="fa-solid fa-crown text-gold text-sm"></i>
+                            <span data-i18n="featuredSectionTitle">بطاقات مختارة</span>
+                        </h3>
+                    </div>
+                    <button onclick="switchTab('encyclopedia')" class="text-xs font-bold text-amber-900 hover:underline mr-3" data-i18n="allCards">كل البطاقات ←</button>
+                </div>
+                <div id="home-featured-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- أحدث الإضافات -->
+            <div class="space-y-3">
+                <div class="pharaonic-divider">
+                    <h3 class="font-title text-lg font-bold text-obsidian" data-i18n="latestAdditions">أحدث الإضافات</h3>
+                </div>
+                <div id="home-latest-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+            </div>
+
+            <footer class="text-center text-xs text-gray-500 pt-6 border-t border-amber-900/10">
+                <p class="font-title text-base text-obsidian" data-i18n="footerTitle">أثر وحكاية — موسوعة المرشد السياحي</p>
+                <p class="mt-1" data-i18n="footerSub">إعداد وتوثيق: حبيبة | جميع البيانات محفوظة محلياً وتعمل بدون إنترنت</p>
+            </footer>
+        </section>
+
+        <!-- 2. صفحة القاعات -->
+        <section id="page-halls" class="space-y-6 hidden">
+            <div class="flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <h2 class="font-title text-2xl font-bold text-obsidian" data-i18n="hallsSectionTitle">قاعات المتحف</h2>
+                    <p class="text-xs text-gray-600" data-i18n="hallsSub">استكشف الشخصيات مصنفة حسب دورها في الحضارة المصرية القديمة</p>
+                </div>
+                <button onclick="checkOwnerAction(() => openHallFormModal())" class="owner-only hidden bg-obsidian text-goldLight px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow">
+                    <i class="fa-solid fa-plus"></i>
+                    <span data-i18n="newHallBtn">قاعة جديدة</span>
+                </button>
+            </div>
+            <div id="halls-main-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
+            <div id="single-hall-view" class="hidden space-y-5 bg-white p-5 sm:p-6 rounded-3xl border border-gold/30 shadow-sm">
+                <div class="flex justify-between items-start gap-4 border-b pb-4">
+                    <div>
+                        <button onclick="closeSingleHall()" class="text-xs text-amber-800 font-bold mb-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-right"></i> <span data-i18n="backToHalls">العودة لكل القاعات</span>
+                        </button>
+                        <h3 id="sh-title" class="font-title text-2xl font-bold text-obsidian"></h3>
+                        <p id="sh-desc" class="text-xs text-gray-600 mt-1"></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="sh-add-btn" class="owner-only hidden bg-gold text-obsidian px-3 py-2 rounded-xl text-xs font-bold" data-i18n="addToHall">+ إضافة للقاعة</button>
+                        <button id="sh-edit-btn" class="owner-only hidden bg-gray-100 text-gray-800 px-3 py-2 rounded-xl text-xs font-bold" data-i18n="editHall">تعديل القاعة</button>
+                    </div>
+                </div>
+                <input type="text" id="sh-search" onkeyup="renderSingleHallCards()" placeholder="ابحث داخل هذه القاعة..." class="w-full bg-papyrus border border-amber-900/15 rounded-xl px-4 py-2.5 text-xs">
+                <div id="sh-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+        </section>
+
+        <!-- 3. صفحة الموسوعة -->
+        <section id="page-encyclopedia" class="space-y-5 hidden">
+            <div class="flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <h2 class="font-title text-2xl font-bold text-obsidian" data-i18n="encyTitle">الموسوعة الأثرية الشاملة</h2>
+                    <p class="text-xs text-gray-600" data-i18n="encySub">ابحث بالاسم، الأسرة، المعبد، الأثر، المتحف، أو الحقائق العلمية</p>
+                </div>
+                <span id="ency-count-badge" class="bg-obsidian text-goldLight text-xs px-3 py-1.5 rounded-full font-bold"></span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-amber-900/10 shadow-sm space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <input type="text" id="ency-search" onkeyup="renderEncyclopedia()" placeholder="ابحث في كل الحقول والمعابد والآثار والمتاحف..." class="bg-papyrus border border-amber-900/15 rounded-xl px-3.5 py-2 text-xs">
+                    <select id="ency-filter-era" onchange="renderEncyclopedia()" class="bg-papyrus border border-amber-900/15 rounded-xl px-3.5 py-2 text-xs">
+                        <option value="">كل العصور التاريخية</option>
+                    </select>
+                    <select id="ency-filter-type" onchange="renderEncyclopedia()" class="bg-papyrus border border-amber-900/15 rounded-xl px-3.5 py-2 text-xs">
+                        <option value="" data-i18n="allTypes">كل الشخصيات (ملك، ملكة، من كبار رجال الدولة...)</option>
+                        <option value="ملك">ملك | King</option>
+                        <option value="ملكة">ملكة | Queen</option>
+                        <option value="وزير">وزير | Vizier</option>
+                        <option value="مهندس">مهندس | Architect</option>
+                        <option value="كاهن">كاهن | Priest</option>
+                        <option value="موظف دولة">مشرف / موظف دولة | State Official</option>
+                        <option value="إله">إله / إلهة | Deity</option>
+                    </select>
+                </div>
+                <div class="flex justify-end">
+                    <button onclick="resetFilters()" class="text-[11px] text-red-700 font-bold hover:underline" data-i18n="resetFilters">مسح الفلاتر</button>
+                </div>
+            </div>
+            <div id="encyclopedia-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- 4. صفحة الخط الزمني -->
+        <section id="page-timeline" class="space-y-6 hidden">
+            <div>
+                <h2 class="font-title text-2xl font-bold text-obsidian" data-i18n="timelineTitle">الخط الزمني للحضارة المصرية</h2>
+                <p class="text-xs text-gray-600" data-i18n="timelineSub">تسلسل الشخصيات والملوك من الأقدم إلى الأحدث على المسطرة التاريخية</p>
+            </div>
+            <div id="timeline-list" class="relative border-r-2 border-gold pr-6 mr-3 space-y-6"></div>
+        </section>
+
+        <!-- 5. عن الموسوعة -->
+        <section id="page-about" class="space-y-6 hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gold/30 shadow-sm space-y-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-obsidian text-goldLight flex items-center justify-center font-title text-2xl font-bold border border-gold">أ</div>
+                    <div>
+                        <h2 class="font-title text-2xl font-bold text-obsidian" data-i18n="aboutTitle">عن موسوعة «أثر وحكاية»</h2>
+                        <p class="text-xs text-amber-800 font-semibold" data-i18n="aboutSub">مشروع توثيقي للمرشد السياحي والباحث الأثري</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed" data-i18n="aboutBody">
+                    تقوم فكرة الموسوعة على تحويل التاريخ المصري القديم من مجرد تواريخ وأسماء جامدة إلى بطاقات هوية أثرية حية تروي حكاية كل ملك وملكة ومن كبار رجال الدولة (وزراء، مهندسين، كهنة، ومشرفي أعمال)، وتربط الشخصية بأسمائها الملكية الخمسة وصورها، وعائلتها، ومعابدها وأماكنها الأثرية، ومقابرها، وأهم تماثيلها وآثارها وأماكن عرضها الفعلية في المتاحف المصرية والعالمية.
+                </p>
+                <div class="grid grid-cols-3 gap-4 bg-papyrus p-4 rounded-2xl text-center border border-amber-900/10">
+                    <div>
+                        <div id="about-stat-fig" class="text-2xl font-bold text-obsidian font-classic">6</div>
+                        <div class="text-xs text-gray-600" data-i18n="statFigures">بطاقة أثرية</div>
+                    </div>
+                    <div>
+                        <div id="about-stat-era" class="text-2xl font-bold text-obsidian font-classic">4</div>
+                        <div class="text-xs text-gray-600" data-i18n="statEras">عصور تاريخية</div>
+                    </div>
+                    <div>
+                        <div id="about-stat-art" class="text-2xl font-bold text-obsidian font-classic">13</div>
+                        <div class="text-xs text-gray-600" data-i18n="statArtifacts">أثراً ومقبرة ومعبداً</div>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button onclick="switchTab('encyclopedia')" class="bg-obsidian text-goldLight px-6 py-3 rounded-xl text-xs font-bold shadow" data-i18n="browseBtn">ابدأ تصفح الموسوعة الآن</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- الشريط السفلي للموبايل -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-papyrus/95 backdrop-blur border-t border-amber-900/15 shadow-lg py-2 px-2 z-40 flex justify-around items-center text-[10px] text-gray-600">
+        <button onclick="switchTab('home')" id="mob-nav-home" class="flex flex-col items-center gap-1 text-obsidian font-bold">
+            <i class="fa-solid fa-house text-base"></i>
+            <span data-i18n="navHome">الرئيسية</span>
+        </button>
+        <button onclick="switchTab('halls')" id="mob-nav-halls" class="flex flex-col items-center gap-1">
+            <i class="fa-solid fa-landmark text-base"></i>
+            <span data-i18n="navHalls">القاعات</span>
+        </button>
+        <button onclick="switchTab('encyclopedia')" id="mob-nav-encyclopedia" class="flex flex-col items-center gap-1">
+            <i class="fa-solid fa-border-all text-base"></i>
+            <span data-i18n="navEncyclopedia">الموسوعة</span>
+        </button>
+        <button onclick="switchTab('timeline')" id="mob-nav-timeline" class="flex flex-col items-center gap-1">
+            <i class="fa-solid fa-hourglass-half text-base"></i>
+            <span data-i18n="navTimeline">الخط الزمني</span>
+        </button>
+        <!-- مخفي تماماً إلا للمالك بعد إدخال كلمة المرور -->
+        <button onclick="checkOwnerAction(() => openAddModal())" id="mob-nav-add" class="owner-only hidden flex flex-col items-center gap-1 text-amber-900 font-bold">
+            <i class="fa-solid fa-plus text-base"></i>
+            <span data-i18n="navAddShort">إضافة</span>
+        </button>
+    </nav>
+
+    <!-- نافذة تفاصيل البطاقة الكاملة -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-papyrus text-obsidian rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto relative shadow-2xl border-2 border-gold/50">
+            <div class="sticky top-0 z-30 bg-papyrus/95 backdrop-blur px-5 py-3 border-b border-amber-900/10 flex justify-between items-center">
+                <div id="detail-owner-actions" class="owner-only hidden flex gap-2"></div>
+                <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-red-100 text-gray-700 hover:text-red-600 flex items-center justify-center font-bold mr-auto">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="detail-modal-body" class="p-5 sm:p-8 space-y-6"></div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة / تعديل بطاقة شخصية -->
+    <div id="form-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-white text-obsidian rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-5 sm:p-7 relative shadow-2xl border border-gold">
+            <div class="flex justify-between items-center border-b pb-3 mb-4 sticky top-0 bg-white z-20">
+                <h3 id="form-modal-title" class="font-title text-xl font-bold text-obsidian">إضافة بطاقة هوية أثرية جديدة</h3>
+                <button onclick="closeFormModal()" class="text-gray-500 hover:text-red-600 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="figure-form" onsubmit="saveFigure(event)" class="space-y-5 text-xs">
+                <input type="hidden" id="edit-id">
+                
+                <!-- 1. البيانات الأساسية -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <h4 class="font-bold text-sm text-amber-900">1. البيانات الأساسية والهوية (عربي وإنجليزي)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold mb-1">الاسم بالعربية *</label>
+                            <input type="text" id="f-nameAr" required placeholder="مثال: حتشبسوت أو رخميرع" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">الاسم بالإنجليزية (English Name)</label>
+                            <input type="text" id="f-nameEn" placeholder="Hatshepsut / Rekhmire" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block font-bold mb-1">نوع الشخصية / المنصب *</label>
+                            <select id="f-type" onchange="toggleQueenRule()" class="w-full border rounded-xl p-2.5 bg-white">
+                                <option value="ملك">ملك</option>
+                                <option value="ملكة">ملكة</option>
+                                <option value="وزير">وزير (كبار رجال الدولة)</option>
+                                <option value="مهندس">مهندس (كبار رجال الدولة)</option>
+                                <option value="كاهن">كاهن (كبار رجال الدولة)</option>
+                                <option value="موظف دولة">مشرف / موظف دولة</option>
+                                <option value="إله">إله</option>
+                                <option value="إلهة">إلهة</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">العصر التاريخي بالعربية *</label>
+                            <input type="text" id="f-era" required list="eras-suggestions" placeholder="مثال: عصر ما قبل الأسرات" class="w-full border rounded-xl p-2.5 bg-white">
+                            <datalist id="eras-suggestions">
+                                <option value="عصر ما قبل الأسرات">
+                                <option value="العصر العتيق">
+                                <option value="الدولة القديمة">
+                                <option value="الدولة الوسطى">
+                                <option value="الدولة الحديثة">
+                                <option value="العصر المتأخر">
+                                <option value="العصر اليوناني الروماني">
+                            </datalist>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">العصر بالإنجليزية (Era EN)</label>
+                            <input type="text" id="f-eraEn" placeholder="Predynastic Period" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block font-bold mb-1">الأسرة الحاكمة (عربي / EN)</label>
+                            <input type="text" id="f-dynasty" placeholder="الأسرة 18 / 18th Dynasty" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">فترة الحكم / الخدمة (عربي / EN)</label>
+                            <input type="text" id="f-timeline" placeholder="نحو 1479 – 1458 ق.م" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">السنة الترتيبية (للخط الزمني)</label>
+                            <input type="number" id="f-sortYear" placeholder="-3200 (سالب لـ ق.م)" class="w-full border rounded-xl p-2.5 bg-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">الصورة الرئيسية (رابط أو رفع من الجهاز)</label>
+                        <div class="flex gap-1.5">
+                            <input type="text" id="f-image" placeholder="رابط الصورة..." class="flex-1 border rounded-xl p-2.5 bg-white">
+                            <label class="bg-obsidian text-goldLight px-3 py-2.5 rounded-xl cursor-pointer font-bold shrink-0 flex items-center gap-1">
+                                <i class="fa-solid fa-upload"></i> رفع
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, 'f-image')">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="queen-rule-box" class="hidden bg-amber-100/70 p-3 rounded-xl border border-amber-400 space-y-2">
+                        <label class="block font-bold text-amber-950">هل حكمت هذه الملكة مصر بنفسها؟</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-1.5 cursor-pointer">
+                                <input type="radio" name="queenRuled" value="yes" checked onchange="toggleQueenHusband()"> نعم، حكمت بنفسها (تظهر كبطاقة مستقلة)
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer">
+                                <input type="radio" name="queenRuled" value="no" onchange="toggleQueenHusband()"> لا، لم تحكم (تُعرض داخل بطاقة زوجها الملك)
+                            </label>
+                        </div>
+                        <div id="queen-husband-select-box" class="hidden pt-1">
+                            <label class="block font-bold mb-1">اختر زوجها الملك:</label>
+                            <select id="f-husbandId" class="w-full border rounded-xl p-2 bg-white"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. القصة والإنجازات -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <h4 class="font-bold text-sm text-amber-900">2. القصة والإنجازات والمناصب (عربي وإنجليزي)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold mb-1">الشرح بالعربية *</label>
+                            <textarea id="f-storyAr" rows="3" required placeholder="احكي قصة الشخصية وإنجازاتها ومناصبها..." class="w-full border rounded-xl p-2.5 bg-white"></textarea>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">الشرح بالإنجليزية (Story in English)</label>
+                            <textarea id="f-storyEn" rows="3" placeholder="Story, roles, and achievements in English..." class="w-full border rounded-xl p-2.5 bg-white"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. الأسماء الخمسة الملكية (خانات متعددة مرنة لكل لقب) -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-4 border border-amber-900/10">
+                    <div>
+                        <h4 class="font-bold text-sm text-amber-900">3. الأسماء الخمسة الملكية (للملوك)</h4>
+                        <p class="text-[11px] text-gray-600">تقدري تزودي تحت كل لقب أي عدد من الخانات (كل خانة فيها صورة + نص/اسم + شرح مفصل بالعربي والإنجليزي).</p>
+                    </div>
+                    <div id="five-names-builder" class="space-y-4"></div>
+                </div>
+
+                <!-- 4. العائلة -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <h4 class="font-bold text-sm text-amber-900">4. العائلة</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div><label class="block font-bold mb-1">الأب (عربي / EN)</label><input type="text" id="f-father" class="w-full border rounded-xl p-2 bg-white"></div>
+                        <div><label class="block font-bold mb-1">الأم (عربي / EN)</label><input type="text" id="f-mother" class="w-full border rounded-xl p-2 bg-white"></div>
+                        <div><label class="block font-bold mb-1">الزوج / الزوجة</label><input type="text" id="f-spouse" class="w-full border rounded-xl p-2 bg-white"></div>
+                        <div><label class="block font-bold mb-1">الأبناء</label><input type="text" id="f-children" class="w-full border rounded-xl p-2 bg-white"></div>
+                    </div>
+                </div>
+
+                <!-- 5. الآثار وأماكن عرضها في المتاحف -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-amber-900">5. القطع الأثرية وأماكن عرضها في المتاحف</h4>
+                        <button type="button" onclick="addArtifactRow()" class="bg-obsidian text-goldLight px-3 py-1.5 rounded-lg font-bold">+ إضافة أثر</button>
+                    </div>
+                    <div id="form-artifacts-list" class="space-y-3"></div>
+                </div>
+
+                <!-- 6. المعابد والأماكن الأثرية -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-amber-900">6. المعابد والأماكن الأثرية (شرح معماري وتاريخي وموقعها)</h4>
+                        <button type="button" onclick="addTempleRow()" class="bg-obsidian text-goldLight px-3 py-1.5 rounded-lg font-bold">+ إضافة معبد / مكان أثري</button>
+                    </div>
+                    <div id="form-temples-list" class="space-y-3"></div>
+                </div>
+
+                <!-- 7. المقابر (متاح إضافة أكثر من مقبرة) -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-amber-900">7. المقابر ومواقعها (متاح إضافة أكثر من مقبرة)</h4>
+                        <button type="button" onclick="addTombRow()" class="bg-obsidian text-goldLight px-3 py-1.5 rounded-lg font-bold">+ إضافة مقبرة</button>
+                    </div>
+                    <div id="form-tombs-list" class="space-y-3"></div>
+                </div>
+
+                <!-- 8. الحقائق العلمية -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-amber-900">8. الحقائق العلمية (عربي وإنجليزي)</h4>
+                        <button type="button" onclick="addFactRow()" class="bg-obsidian text-goldLight px-3 py-1.5 rounded-lg font-bold">+ إضافة حقيقة</button>
+                    </div>
+                    <div id="form-facts-list" class="space-y-2.5"></div>
+                </div>
+
+                <!-- 9. خانات إضافية مخصصة -->
+                <div class="bg-papyrus p-4 rounded-2xl space-y-3 border border-amber-900/10">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-amber-900">9. خانات إضافية مخصصة بحرية (عربي وإنجليزي)</h4>
+                        <button type="button" onclick="addCustomSectionRow()" class="bg-gold text-obsidian px-3 py-1.5 rounded-lg font-bold">+ إضافة خانة جديدة</button>
+                    </div>
+                    <div id="form-custom-sections-list" class="space-y-3"></div>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" class="flex-1 bg-obsidian text-goldLight font-bold py-3.5 rounded-xl shadow-lg text-sm">حفظ البطاقة في الموسوعة</button>
+                    <button type="button" onclick="closeFormModal()" class="px-6 bg-gray-200 text-gray-800 font-bold py-3.5 rounded-xl">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة / تعديل قاعة -->
+    <div id="hall-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-gold">
+            <h3 id="hall-modal-title" class="font-title text-xl font-bold">إضافة / تعديل قاعة</h3>
+            <form onsubmit="saveHall(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="h-id">
+                <div><label class="block font-bold mb-1">اسم القاعة بالعربية *</label><input type="text" id="h-nameAr" required class="w-full border rounded-xl p-2.5 bg-papyrus"></div>
+                <div><label class="block font-bold mb-1">اسم القاعة بالإنجليزية (Hall Name EN)</label><input type="text" id="h-nameEn" class="w-full border rounded-xl p-2.5 bg-papyrus"></div>
+                <div><label class="block font-bold mb-1">وصف القاعة بالعربية</label><textarea id="h-desc" rows="2" class="w-full border rounded-xl p-2.5 bg-papyrus"></textarea></div>
+                <div><label class="block font-bold mb-1">وصف القاعة بالإنجليزية (Hall Description EN)</label><textarea id="h-descEn" rows="2" class="w-full border rounded-xl p-2.5 bg-papyrus"></textarea></div>
+                <div>
+                    <label class="block font-bold mb-1">نوع الشخصيات المرتبطة بالقاعة</label>
+                    <select id="h-filterType" class="w-full border rounded-xl p-2.5 bg-papyrus">
+                        <option value="ملك">ملوك (ملك)</option>
+                        <option value="ملكة">ملكات (ملكة)</option>
+                        <option value="وزير">كبار رجال الدولة (وزراء، مهندسون، كهنة، مشرفون)</option>
+                        <option value="إله">آلهة (إله / إلهة)</option>
+                        <option value="all">مختلطة / مخصصة</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">صورة غلاف القاعة (رابط أو رفع)</label>
+                    <div class="flex gap-1">
+                        <input type="text" id="h-img" class="flex-1 border rounded-xl p-2.5 bg-papyrus">
+                        <label class="bg-obsidian text-goldLight px-3 py-2.5 rounded-xl cursor-pointer font-bold">
+                            <i class="fa-solid fa-upload"></i>
+                            <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, 'h-img')">
+                        </label>
+                    </div>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button type="submit" class="flex-1 bg-obsidian text-goldLight font-bold py-2.5 rounded-xl">حفظ القاعة</button>
+                    <button type="button" onclick="closeHallModal()" class="px-4 bg-gray-200 rounded-xl font-bold">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة الحساب وكلمة المرور -->
+    <div id="profile-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-gold text-center">
+            <div class="w-14 h-14 rounded-full bg-obsidian text-goldLight flex items-center justify-center font-title text-2xl font-bold mx-auto border-2 border-gold">H</div>
+            <div>
+                <h3 class="font-title text-xl font-bold text-obsidian">إدارة المالك (حبيبة)</h3>
+                <p class="text-xs text-gray-500 mt-1">الموسوعة في وضع الزائر الآمن للآخرين</p>
+            </div>
+            <div id="owner-status-box" class="bg-papyrus p-3.5 rounded-2xl flex justify-between items-center text-xs border border-amber-900/10">
+                <span class="font-bold">حالة التعديل:</span>
+                <span id="status-badge" class="bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold">مغلق (وضع الزائر)</span>
+            </div>
+            <button onclick="requestOwnerAccess()" id="unlock-btn" class="w-full bg-obsidian text-goldLight py-3 rounded-xl font-bold text-xs shadow">
+                <i class="fa-solid fa-key ml-1"></i> فتح صلاحية التعديل (أدخل كلمة المرور)
+            </button>
+            <div class="space-y-2 text-xs text-right bg-gray-50 p-3.5 rounded-2xl border">
+                <p class="font-bold text-obsidian">النسخ الاحتياطي ومشاركة البيانات:</p>
+                <div class="flex gap-2 pt-1">
+                    <button onclick="exportData()" class="flex-1 bg-obsidian text-goldLight py-2 rounded-xl font-bold"><i class="fa-solid fa-download ml-1"></i> تصدير البيانات</button>
+                    <label class="flex-1 bg-gold text-obsidian py-2 rounded-xl font-bold text-center cursor-pointer">
+                        <i class="fa-solid fa-upload ml-1"></i> استيراد ملف
+                        <input type="file" accept=".json" class="hidden" onchange="importData(this)">
+                    </label>
+                </div>
+            </div>
+            <button onclick="closeProfileModal()" class="w-full bg-gray-200 text-gray-800 py-2.5 rounded-xl text-xs font-bold">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة طلب كلمة المرور -->
+    <div id="password-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border-2 border-gold text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center text-xl mx-auto"><i class="fa-solid fa-lock"></i></div>
+            <h3 class="font-title text-xl font-bold text-obsidian">منطقة محمية للمالك</h3>
+            <p class="text-xs text-gray-600">أدخلي كلمة المرور السرية لتفعيل التعديل والإضافة</p>
+            <input type="password" id="password-input" placeholder="أدخلي كلمة المرور..." class="w-full border rounded-xl p-3 text-center text-sm bg-papyrus focus:ring-2 focus:ring-gold outline-none">
+            <div class="flex gap-2 pt-2">
+                <button onclick="verifyPassword()" class="flex-1 bg-obsidian text-goldLight py-2.5 rounded-xl font-bold text-xs">دخول</button>
+                <button onclick="closePasswordModal()" class="px-4 bg-gray-200 text-gray-800 py-2.5 rounded-xl font-bold text-xs">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تكبير الصور -->
+    <div id="lightbox-modal" onclick="this.classList.add('hidden')" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 cursor-zoom-out">
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl border border-gold/40">
+    </div>
+
+    <script>
+        let currentLang = 'ar';
+        let isOwner = false;
+        let currentOpenHallId = null;
+        let pendingAction = null;
+        const correctPassword = "habiba2026";
+
+        const titleCategories = [
+            { key: 'horus', labelAr: 'الاسم الحوري', labelEn: 'Horus Name' },
+            { key: 'nebty', labelAr: 'الاسم النبتي', labelEn: 'Nebty Name' },
+            { key: 'goldenHorus', labelAr: 'حورس الذهبي', labelEn: 'Golden Horus' },
+            { key: 'coronation', labelAr: 'اسم التتويج', labelEn: 'Prenomen / Coronation' },
+            { key: 'birth', labelAr: 'اسم الميلاد', labelEn: 'Nomen / Birth Name' }
+        ];
+
+        const defaultHalls = [
+            { id: 'kings', nameAr: 'قاعة الملوك', nameEn: 'Hall of Kings', desc: 'فراعنة مصر العظام وموحدو القطرين وبناة الإمبراطورية.', descEn: 'Great pharaohs of Egypt, unifiers of the Two Lands, and empire builders.', filterType: 'ملك', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Thutmose_III_Cairo_Museum.JPG/800px-Thutmose_III_Cairo_Museum.JPG' },
+            { id: 'queens', nameAr: 'قاعة الملكات', nameEn: 'Hall of Queens', desc: 'عظيمات مصر والملكات الحاكمات وصانعات التاريخ.', descEn: 'Great queens of Egypt, female rulers, and history makers.', filterType: 'ملكة', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hatshepsut-Metropolitan_Museum.jpg/800px-Hatshepsut-Metropolitan_Museum.jpg' },
+            { id: 'officials', nameAr: 'قاعة كبار رجال الدولة', nameEn: 'Hall of Senior State Officials', desc: 'كبار رجال الدولة من وزراء ومهندسين وكهنة ومشرفي أعمال خدموا تحت الملك وأداروا شؤون مصر.', descEn: 'Senior state officials including viziers, architects, priests, and overseers who served the king and administered Egypt.', filterType: 'وزير', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Imhotep_Louvre.jpg/640px-Imhotep_Louvre.jpg' },
+            { id: 'deities', nameAr: 'قاعة الآلهة', nameEn: 'Hall of Deities', desc: 'معبودات مصر القديمة ورموز العقيدة والخلود.', descEn: 'Ancient Egyptian deities and symbols of belief and eternity.', filterType: 'إله', img: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=800&q=80' }
+        ];
+
+        const defaultFigures = [
+            {
+                id: 100, nameAr: "الملك العقرب الثاني", nameEn: "King Scorpion II", type: "ملك", era: "عصر ما قبل الأسرات", eraEn: "Predynastic Period", dynasty: "الأسرة 0 | Dynasty 0", sortYear: -3200, timeline: "نحو 3200 ق.م | c. 3200 BC",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Scorpion_Macehead_Ashmolean.jpg/640px-Scorpion_Macehead_Ashmolean.jpg",
+                storyAr: "أحد أبرز حكام صعيد مصر في أواخر عصر ما قبل الأسرات (نقادة الثالثة)، ومهّد الطريق لتوحيد القطرين قبل الملك نارمر مباشرة.",
+                storyEn: "One of the prominent rulers of Upper Egypt during the late Predynastic period (Naqada III), paving the way for unification.",
+                titles: {
+                    horus: [{ titleAr: "سرقت (العقرب)", titleEn: "Serqet (Scorpion)", descAr: "يُرمز لاسمه برمز العقرب مع وردة سباعية البتلات تمثل الملكية.", descEn: "Represented by a scorpion symbol paired with a seven-petaled rosette.", img: "" }],
+                    nebty: [], goldenHorus: [], coronation: [], birth: []
+                },
+                father: "غير مؤكد", mother: "-", spouse: "شيش الأولى (مرجح)", children: "نارمر (مرجح)",
+                temples: [],
+                tombs: [{ nameAr: "مقبرة U-j في أم القعاب، أبيدوس (مرجحة)", nameEn: "Tomb U-j at Umm el-Qa'ab, Abydos", descAr: "تضم أقدم النقوش الهيروغليفية المبكرة على بطاقات عاجية.", descEn: "Contains the earliest known hieroglyphic inscriptions on ivory tags.", img: "" }],
+                artifacts: [{ nameAr: "مقمعة الملك العقرب", nameEn: "Scorpion Macehead", museumAr: "متحف أشموليان، أكسفورد", museumEn: "Ashmolean Museum, Oxford", descAr: "رأس مقمعة احتفالية من الحجر الجيري تُصوّر الملك مرتدياً التاج الأبيض للصعيد وهو يفتتح مشروعاً للري.", descEn: "Ceremonial limestone macehead depicting the king wearing the White Crown of Upper Egypt.", img: "" }],
+                facts: [{ ar: "تُظهر مقمعته اهتمام المصريين القدماء بمشاريع الري وحفر القنوات منذ فجر التاريخ.", en: "His macehead highlights early Egyptian irrigation and canal-digging projects." }],
+                customSections: []
+            },
+            {
+                id: 1, nameAr: "نارمر (مينا)", nameEn: "Narmer (Menes)", type: "ملك", era: "العصر العتيق", eraEn: "Early Dynastic Period", dynasty: "الأسرة الأولى | 1st Dynasty", sortYear: -3100, timeline: "نحو 3100 ق.م | c. 3100 BC",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Thutmose_III_Cairo_Museum.JPG/800px-Thutmose_III_Cairo_Museum.JPG",
+                storyAr: "الملك المؤسس الذي تُنسب إليه أعظم لحظة في تاريخ مصر القديمة: توحيد مملكتي الشمال والجنوب لأول مرة وإقامة عاصمة موحدة في منف.",
+                storyEn: "The founding king credited with uniting Upper and Lower Egypt for the first time and establishing Memphis.",
+                titles: {
+                    horus: [{ titleAr: "نار - مر", titleEn: "Narmer", descAr: "يعني القرموط المقاتل، ويرمز للقوة والبطش بالأعداء.", descEn: "Means 'Raging Catfish', symbolizing strength and victory.", img: "" }],
+                    nebty: [{ titleAr: "من", titleEn: "Men", descAr: "يرمز للثبات والاستقرار تحت حماية ربتي الشمال والجنوب.", descEn: "Symbolizes stability under the Two Ladies.", img: "" }],
+                    goldenHorus: [],
+                    coronation: [{ titleAr: "مينا", titleEn: "Menes", descAr: "الاسم الذي اشتهر به في القوائم الملكية كمؤسس للأسرة الأولى.", descEn: "Name recorded in king lists as founder of the 1st Dynasty.", img: "" }],
+                    birth: [{ titleAr: "نارمر", titleEn: "Narmer", descAr: "اسمه المسجل على الصلاية الشهيرة.", descEn: "Recorded on the famous Narmer Palette.", img: "" }]
+                },
+                father: "الملك كا (مرجح)", mother: "نيت حتب", spouse: "نيت حتب", children: "حور عحا",
+                temples: [],
+                tombs: [{ nameAr: "مقبرة B17/B18 في أم القعاب، أبيدوس", nameEn: "Tomb B17/B18 at Umm el-Qa'ab, Abydos", descAr: "مقبرة ملكية مزدوجة مبنية من الطوب اللبن في جبانة الملوك الأوائل.", descEn: "Double royal mudbrick tomb in the early royal necropolis.", img: "" }],
+                artifacts: [{ nameAr: "صلاية الملك نارمر", nameEn: "Narmer Palette", museumAr: "المتحف المصري بالتحرير (الدور الأرضي)", museumEn: "Egyptian Museum in Cairo (Ground Floor)", descAr: "لوحة من حجر الشيست الأخضر توثق انتصار الملك وتوحيد التاجين الأبيض والأحمر في مشاهد نحتية بديعة.", descEn: "Green siltstone palette documenting the king's victory and unification of the Two Crowns.", img: "" }],
+                facts: [{ ar: "تُعد صلاية نارمر أقدم وثيقة تاريخية مصورة لتوحيد دولة مركزية في العالم.", en: "The Narmer Palette is the oldest historical document depicting a unified state." }],
+                customSections: []
+            },
+            {
+                id: 2, nameAr: "زوسر (نتر خيت)", nameEn: "Djoser (Netjerikhet)", type: "ملك", era: "الدولة القديمة", eraEn: "Old Kingdom", dynasty: "الأسرة الثالثة | 3rd Dynasty", sortYear: -2667, timeline: "نحو 2667 – 2648 ق.م",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Djoser_statue_Cairo_Museum.jpg/640px-Djoser_statue_Cairo_Museum.jpg",
+                storyAr: "صاحب أول ثورة معمارية في التاريخ؛ حيث انتقل بالعمارة الجنائزية من الطوب اللبن إلى الحجر الجيري الكامل ببناء هرمه المدرج في سقارة.",
+                storyEn: "Initiated the first monumental stone architecture in history with his Step Pyramid at Saqqara.",
+                titles: {
+                    horus: [{ titleAr: "نتر خيت", titleEn: "Netjerikhet", descAr: "يعني 'جسد الآلهة'، وهو اسمه الأصلي المعاصر لحكمه.", descEn: "Means 'Divine of Body', his contemporary Horus name.", img: "" }],
+                    nebty: [{ titleAr: "نتر خيت", titleEn: "Netjerikhet", descAr: "لقب السيدتين.", descEn: "Two Ladies title.", img: "" }],
+                    goldenHorus: [{ titleAr: "رع نب", titleEn: "Ra-neb", descAr: "لقب حورس الذهبي.", descEn: "Golden Horus title.", img: "" }],
+                    coronation: [{ titleAr: "زوسر", titleEn: "Djoser", descAr: "يعني 'المقدس'، وأُطلق عليه في العصور اللاحقة.", descEn: "Means 'The Holy One', attributed in later periods.", img: "" }],
+                    birth: []
+                },
+                father: "خع سخموي", mother: "ني ماعت حاب", spouse: "حتب حرنبتي", children: "إنت كا إس",
+                temples: [],
+                tombs: [{ nameAr: "الهرم المدرج، سقارة - الجيزة", nameEn: "Step Pyramid, Saqqara", descAr: "أول بناء حجري ضخم في العالم مكون من 6 مصاطب بارتفاع 62 متراً.", descEn: "First monumental stone building in the world consisting of 6 mastabas.", img: "" }],
+                artifacts: [{ nameAr: "تمثال الملك زوسر الجالس", nameEn: "Seated Statue of Djoser", museumAr: "المتحف المصري بالتحرير", museumEn: "Egyptian Museum in Cairo", descAr: "أقدم تمثال ملكي بالحجم الطبيعي في مصر القديمة، عُثر عليه داخل السرداب.", descEn: "Oldest known life-sized royal statue in ancient Egypt, found inside the Serdab.", img: "" }],
+                facts: [{ ar: "يتكون الهرم المدرج من 6 مصاطب حجرية بارتفاع 62 متراً.", en: "The Step Pyramid consists of 6 stone mastabas rising to 62 meters." }],
+                customSections: []
+            },
+            {
+                id: 3, nameAr: "إمحوتب", nameEn: "Imhotep", type: "وزير", era: "الدولة القديمة", eraEn: "Old Kingdom", dynasty: "الأسرة الثالثة | 3rd Dynasty", sortYear: -2650, timeline: "نحو 2650 ق.م",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Imhotep_Louvre.jpg/640px-Imhotep_Louvre.jpg",
+                storyAr: "من كبار رجال الدولة؛ شغل مناصب الوزير وكبير المهندسين والكاهن في بلاط الملك زوسر، وصمم مجموعته الهرمية في سقارة، واشتهر بالطب والحكمة حتى قُدّس لاحقاً.",
+                storyEn: "Senior state official serving as vizier, chief architect, and priest under King Djoser; designer of the Step Pyramid complex at Saqqara.",
+                titles: { horus: [], nebty: [], goldenHorus: [], coronation: [], birth: [] },
+                father: "كا نفر", mother: "خردو عنخ", spouse: "غير معروف", children: "-",
+                temples: [],
+                tombs: [{ nameAr: "سقارة (لم يُكتشف موقعها الدقيق بعد)", nameEn: "Saqqara (Exact location undiscovered)", descAr: "يُرجح وجودها في جبانة سقارة بالقرب من المجموعة الهرمية.", descEn: "Believed to be located in Saqqara near the Step Pyramid complex.", img: "" }],
+                artifacts: [{ nameAr: "قاعدة تمثال زوسر المنقوش عليها ألقاب إمحوتب", nameEn: "Base of Djoser's Statue with Imhotep's Titles", museumAr: "متحف إمحوتب بسقارة", museumEn: "Imhotep Museum, Saqqara", descAr: "تحمل ألقابه كرئيس للمثالين وكبير كهنة هليوبوليس ووزير.", descEn: "Inscribed with his titles as Chief of Sculptors, High Priest of Heliopolis, and Vizier.", img: "" }],
+                facts: [{ ar: "جمع بين المناصب الإدارية والدينية والهندسية في خدمة الملك زوسر.", en: "Combined administrative, priestly, and architectural roles in service of King Djoser." }],
+                customSections: []
+            },
+            {
+                id: 5, nameAr: "حتشبسوت", nameEn: "Hatshepsut", type: "ملكة", queenRuled: "yes", era: "الدولة الحديثة", eraEn: "New Kingdom", dynasty: "الأسرة الثامنة عشرة | 18th Dynasty", sortYear: -1479, timeline: "نحو 1479 – 1458 ق.م",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hatshepsut-Metropolitan_Museum.jpg/800px-Hatshepsut-Metropolitan_Museum.jpg",
+                storyAr: "أقوى ملكات مصر القديمة وأشهر من حكمت كفرعون كامل الصلاحيات؛ اتسم عهدها بالازدهار المعماري والتجاري وإرسال البعثة الشهيرة إلى بلاد بونت.",
+                storyEn: "One of Egypt's most successful pharaohs, renowned for her temple at Deir el-Bahari and trade expedition to Punt.",
+                titles: {
+                    horus: [{ titleAr: "وسرت كاو", titleEn: "Useretkau", descAr: "قوية الكا (الروح).", descEn: "Mighty of Kas.", img: "" }],
+                    nebty: [{ titleAr: "واجت رنبوت", titleEn: "Wadjrenput", descAr: "مزدهرة السنوات.", descEn: "Flourishing of Years.", img: "" }],
+                    goldenHorus: [{ titleAr: "نترت خعو", titleEn: "Netjeretkhau", descAr: "إلهية التجليات.", descEn: "Divine of Appearances.", img: "" }],
+                    coronation: [{ titleAr: "ماعت كا رع", titleEn: "Maatkare", descAr: "العدل هو روح رع.", descEn: "Truth is the Ka of Ra.", img: "" }],
+                    birth: [{ titleAr: "حتشبسوت خنمت آمون", titleEn: "Hatshepsut Khnemetamun", descAr: "مقدمة السيدات النبيلات، المتحدة مع آمون.", descEn: "Foremost of Noble Ladies, United with Amun.", img: "" }]
+                },
+                father: "تحتمس الأول", mother: "أحمس", spouse: "تحتمس الثاني", children: "نفرورع",
+                temples: [{ nameAr: "معبد الدير البحري (جسر جسرو)", nameEn: "Mortuary Temple at Deir el-Bahari (Djeser-Djeseru)", locationAr: "البر الغربي، الأقصر", locationEn: "West Bank, Luxor", descAr: "معبدها الجنائزي المدرج الذي صممه سنموت وسط الجرف الصخري في الدير البحري، ويضم مناظر بعثة بلاد بونت والمولد الإلهي.", descEn: "Her terraced mortuary temple designed by Senenmut against the cliffs of Deir el-Bahari, featuring the Punt expedition reliefs.", img: "" }],
+                tombs: [{ nameAr: "مقبرة KV20 في وادي الملوك، الأقصر", nameEn: "Tomb KV20, Valley of the Kings", descAr: "أول مقبرة ملكية تُحفر في وادي الملوك.", descEn: "First royal tomb cut in the Valley of the Kings.", img: "" }],
+                artifacts: [{ nameAr: "تمثال حتشبسوت الجالس", nameEn: "Seated Statue of Hatshepsut", museumAr: "متحف المتروبوليتان / المتحف المصري", museumEn: "Metropolitan Museum / Egyptian Museum", descAr: "يصورها في هيئة ملكية مهيبة مرتدية غطاء الرأس الملكي النمس.", descEn: "Depicts her in royal regalia wearing the Nemes headdress.", img: "" }],
+                facts: [{ ar: "يُعد معبدها بالدير البحري أول معبد يوثق رحلة تجارية بحرية بالتفصيل على جدرانه.", en: "Her temple at Deir el-Bahari records the famous maritime trade expedition to Punt." }],
+                customSections: []
+            },
+            {
+                id: 10, nameAr: "رمسيس الثاني", nameEn: "Ramesses II", type: "ملك", era: "الدولة الحديثة", eraEn: "New Kingdom", dynasty: "الأسرة التاسعة عشرة | 19th Dynasty", sortYear: -1279, timeline: "نحو 1279 – 1213 ق.م",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Ramesses_II_British_Museum.jpg/640px-Ramesses_II_British_Museum.jpg",
+                storyAr: "رمسيس الأكبر؛ حكم مصر 66 عاماً، وقع أقدم معاهدة سلام مكتوبة في التاريخ بعد معركة قادش، وترك أعظم المعابد مثل أبو سمبل والرامسيوم.",
+                storyEn: "Ramesses the Great; ruled for 66 years, signed the first peace treaty, and built Abu Simbel.",
+                titles: {
+                    horus: [{ titleAr: "كا نخت مري ماعت", titleEn: "Kanakht Merymaat", descAr: "الثور القوي محبوب ماعت.", descEn: "Strong Bull, Beloved of Maat.", img: "" }],
+                    nebty: [{ titleAr: "مك كمت وعف خاسوت", titleEn: "Mekkemet Wafkhaset", descAr: "حامي مصر وقاهر البلاد الأجنبية.", descEn: "Protector of Egypt who curbs foreign lands.", img: "" }],
+                    goldenHorus: [{ titleAr: "وسر رنبوت عا نختو", titleEn: "Userrenput Aanakhtu", descAr: "غني بالسنوات عظيم الانتصارات.", descEn: "Rich in years, great in victories.", img: "" }],
+                    coronation: [{ titleAr: "وسر ماعت رع ستب إن رع", titleEn: "Usermaatre Setepenre", descAr: "قوي هو عدل رع، المختار من رع.", descEn: "Powerful is the Justice of Ra, Chosen of Ra.", img: "" }],
+                    birth: [{ titleAr: "رع مس سو مري آمون", titleEn: "Ramesses Meryamun", descAr: "ولده رع، محبوب آمون.", descEn: "Born of Ra, Beloved of Amun.", img: "" }]
+                },
+                father: "سيتي الأول", mother: "تويا", spouse: "نفرتاري", children: "مرنبتاح، خع إم واست",
+                temples: [{ nameAr: "معبدا أبو سمبل", nameEn: "Abu Simbel Temples", locationAr: "أسوان، مصر", locationEn: "Aswan, Egypt", descAr: "معبدان منحوتان في الصخر تتعامد الشمس على قدس الأقداس في المعبد الكبير مرتين كل عام، وأُنقذا في عملية دولية كبرى.", descEn: "Rock-cut temples where sunlight aligns with the inner sanctuary twice a year, relocated in a major international rescue project.", img: "" }],
+                tombs: [{ nameAr: "مقبرة KV7 في وادي الملوك، الأقصر", nameEn: "Tomb KV7, Valley of the Kings", descAr: "تقع في وادي الملوك، وتُعرض مومياؤه بالمتحف القومي للحضارة المصرية.", descEn: "Located in the Valley of the Kings; his mummy is displayed at NMEC.", img: "" }],
+                artifacts: [
+                    { nameAr: "تمثال رمسيس الثاني الضخم", nameEn: "Colossal Statue of Ramesses II", museumAr: "بهو المتحف المصري الكبير", museumEn: "Grand Egyptian Museum Atrium", descAr: "يزن 83 طناً من الجرانيت الوردي.", descEn: "Weighs 83 tons of red granite.", img: "" }
+                ],
+                facts: [{ ar: "توجد نسخة من معاهدة قادش للسلام معلقة في مقر الأمم المتحدة بنيويورك.", en: "A replica of the Kadesh Peace Treaty hangs at the UN Headquarters in New York." }],
+                customSections: []
+            }
+        ];
+
+        let halls = JSON.parse(localStorage.getItem('athar_halls_v5')) || defaultHalls;
+        let figures = JSON.parse(localStorage.getItem('athar_figures_v5')) || defaultFigures;
+
+        function saveToStorage() {
+            localStorage.setItem('athar_halls_v5', JSON.stringify(halls));
+            localStorage.setItem('athar_figures_v5', JSON.stringify(figures));
+            updateStats();
+        }
+
+        function checkOwnerAction(action) {
+            if (isOwner) {
+                action();
+            } else {
+                pendingAction = action;
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-modal').classList.remove('hidden');
+            }
+        }
+
+        function requestOwnerAccess() {
+            closeProfileModal();
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-modal').classList.remove('hidden');
+        }
+
+        function verifyPassword() {
+            const val = document.getElementById('password-input').value;
+            if (val === correctPassword) {
+                isOwner = true;
+                document.getElementById('password-modal').classList.add('hidden');
+                updateOwnerVisibility();
+                alert('تم تفعيل وضع التعديل بنجاح يا حبيبة!');
+                if (pendingAction) pendingAction();
+                pendingAction = null;
+            } else {
+                alert('كلمة المرور غير صحيحة!');
+            }
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.add('hidden');
+            pendingAction = null;
+        }
+
+        function tText(ar, en) {
+            if (currentLang === 'en') return en || ar;
+            if (currentLang === 'dual') {
+                if (en && en !== ar) return `${ar} <span class="block text-[11px] opacity-75 font-normal font-sans">${en}</span>`;
+                return ar;
+            }
+            return ar;
+        }
+
+        function tPlain(ar, en) {
+            if (currentLang === 'en') return en || ar;
+            if (currentLang === 'dual') return (en && en !== ar) ? `${ar} | ${en}` : ar;
+            return ar;
+        }
+
+        function getTypeTranslated(type) {
+            const map = {
+                'ملك': { ar: 'ملك', en: 'King' },
+                'ملكة': { ar: 'ملكة', en: 'Queen' },
+                'وزير': { ar: 'وزير • كبار رجال الدولة', en: 'Vizier • Senior State Official' },
+                'مهندس': { ar: 'مهندس • كبار رجال الدولة', en: 'Architect • Senior State Official' },
+                'كاهن': { ar: 'كاهن • كبار رجال الدولة', en: 'Priest • Senior State Official' },
+                'موظف دولة': { ar: 'مشرف / موظف دولة', en: 'Senior State Official' },
+                'إله': { ar: 'إله', en: 'Deity' },
+                'إلهة': { ar: 'إلهة', en: 'Goddess' }
+            };
+            const item = map[type] || { ar: type, en: type };
+            return tPlain(item.ar, item.en);
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            const dir = lang === 'en' ? 'ltr' : 'rtl';
+            document.documentElement.setAttribute('dir', dir);
+            document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'ar');
+
+            ['ar', 'en', 'dual'].forEach(l => {
+                const dBtn = document.getElementById('desk-btn-' + l);
+                const mBtn = document.getElementById('mob-btn-' + l);
+                if (dBtn) dBtn.className = l === lang ? "flex-1 py-1.5 rounded-lg bg-obsidian text-goldLight font-bold transition" : "flex-1 py-1.5 rounded-lg text-gray-700 font-semibold transition";
+                if (mBtn) mBtn.className = l === lang ? "px-2 py-1 rounded-lg bg-obsidian text-goldLight font-bold transition" : "px-2 py-1 rounded-lg text-gray-700 font-semibold transition";
+            });
+
+            const dict = {
+                navHome: { ar: 'الرئيسية', en: 'Home', dual: 'الرئيسية | Home' },
+                navHalls: { ar: 'القاعات', en: 'Halls', dual: 'القاعات | Halls' },
+                navEncyclopedia: { ar: 'الموسوعة', en: 'Encyclopedia', dual: 'الموسوعة | Encyclopedia' },
+                navTimeline: { ar: 'الخط الزمني', en: 'Timeline', dual: 'الخط الزمني | Timeline' },
+                navAdd: { ar: 'إضافة شخصية', en: 'Add Figure', dual: 'إضافة | Add' },
+                navAddShort: { ar: 'إضافة', en: 'Add', dual: 'إضافة' },
+                navAbout: { ar: 'عن الموسوعة', en: 'About', dual: 'عن الموسوعة | About' },
+                ownerManage: { ar: 'إدارة المالك (حبيبة)', en: 'Owner Panel (Habiba)', dual: 'إدارة المالك | Owner' },
+                changeCover: { ar: 'صورة الغلاف', en: 'Change Cover', dual: 'صورة الغلاف' },
+                heroTag: { ar: 'من ما قبل الأسرات إلى العصر الروماني', en: 'From Predynastic times to the Roman era', dual: 'من ما قبل الأسرات إلى العصر الروماني • Predynastic to Roman' },
+                heroHeading: { ar: 'لكل أثرٍ حكاية، ولكل اسمٍ أثر', en: 'Every artifact tells a story. Every name leaves a trace.', dual: 'لكل أثرٍ حكاية، ولكل اسمٍ أثر' },
+                heroDesc: { ar: 'بطاقة هوية أثرية لكل ملك وملكة وكبار رجال الدولة من وزراء ومهندسين وكهنة: قصته، أسماؤه الخمسة، عائلته، مقبرته، معابده وأماكنه الأثرية، وأثره مع مكان عرضه في المتاحف.', en: 'An archaeological ID card for every king, queen, and senior state official (viziers, architects, priests): story, five royal names, family, tombs, temples & sites, and museum artifacts.', dual: 'بطاقة هوية أثرية لكل ملك وملكة وكبار رجال الدولة | Archaeological ID Card' },
+                browseBtn: { ar: 'تصفح الموسوعة', en: 'Browse Encyclopedia', dual: 'تصفح الموسوعة' },
+                statFigures: { ar: 'شخصية موثقة', en: 'documented figures', dual: 'شخصية موثقة' },
+                statEras: { ar: 'عصراً تاريخياً', en: 'historical eras', dual: 'عصراً تاريخياً' },
+                statArtifacts: { ar: 'أثراً ومقبرة ومعبداً', en: 'artifacts, tombs & temples', dual: 'أثراً ومقبرة ومعبداً' },
+                erasSectionTitle: { ar: 'العصور', en: 'Historical Eras', dual: 'العصور | Eras' },
+                hallsSectionTitle: { ar: 'قاعات المتحف', en: 'Museum Halls', dual: 'قاعات المتحف | Halls' },
+                hallsSub: { ar: 'استكشف الشخصيات مصنفة حسب دورها في الحضارة المصرية القديمة', en: 'Explore figures categorized by their role in ancient Egyptian civilization', dual: 'استكشف الشخصيات مصنفة حسب دورها | Explore by role' },
+                featuredSectionTitle: { ar: 'بطاقات مختارة', en: 'Featured Cards', dual: 'بطاقات مختارة | Featured' },
+                allHalls: { ar: 'كل القاعات ←', en: 'All Halls →', dual: 'كل القاعات ←' },
+                allCards: { ar: 'كل البطاقات ←', en: 'All Cards →', dual: 'كل البطاقات ←' },
+                latestAdditions: { ar: 'أحدث الإضافات', en: 'Latest Additions', dual: 'أحدث الإضافات | Latest' },
+                footerTitle: { ar: 'أثر وحكاية — موسوعة المرشد السياحي', en: 'Athar & Hikaya — Tour Guide Encyclopedia', dual: 'أثر وحكاية | Athar & Hikaya' },
+                footerSub: { ar: 'إعداد وتوثيق: حبيبة | جميع البيانات محفوظة محلياً وتعمل بدون إنترنت', en: 'Curated by Habiba | Offline Ready', dual: 'إعداد وتوثيق: حبيبة | Curated by Habiba' },
+                backToHalls: { ar: 'العودة لكل القاعات', en: 'Back to All Halls', dual: 'العودة لكل القاعات' },
+                newHallBtn: { ar: 'قاعة جديدة', en: 'New Hall', dual: 'قاعة جديدة' },
+                addToHall: { ar: '+ إضافة للقاعة', en: '+ Add to Hall', dual: '+ إضافة للقاعة' },
+                editHall: { ar: 'تعديل القاعة', en: 'Edit Hall', dual: 'تعديل القاعة' },
+                encyTitle: { ar: 'الموسوعة الأثرية الشاملة', en: 'Complete Archaeological Encyclopedia', dual: 'الموسوعة الأثرية الشاملة' },
+                encySub: { ar: 'ابحث بالاسم، الأسرة، المعبد، الأثر، المتحف، أو الحقائق العلمية', en: 'Search by name, dynasty, temple, artifact, museum, or facts', dual: 'ابحث بالاسم، الأسرة، المعبد، الأثر، المتحف' },
+                allTypes: { ar: 'كل الشخصيات (ملك، ملكة، كبار رجال الدولة...)', en: 'All Figures (King, Queen, Senior State Officials...)', dual: 'كل الشخصيات | All Figures' },
+                resetFilters: { ar: 'مسح الفلاتر', en: 'Reset Filters', dual: 'مسح الفلاتر' },
+                timelineTitle: { ar: 'الخط الزمني للحضارة المصرية', en: 'Timeline of Ancient Egypt', dual: 'الخط الزمني | Timeline' },
+                timelineSub: { ar: 'تسلسل الشخصيات والملوك من الأقدم إلى الأحدث على المسطرة التاريخية', en: 'Chronological sequence of figures from oldest to newest', dual: 'تسلسل الشخصيات من الأقدم إلى الأحدث' },
+                aboutTitle: { ar: 'عن موسوعة «أثر وحكاية»', en: 'About Athar & Hikaya', dual: 'عن موسوعة «أثر وحكاية»' },
+                aboutSub: { ar: 'مشروع توثيقي للمرشد السياحي والباحث الأثري', en: 'Documentary project for tour guides and researchers', dual: 'مشروع توثيقي للمرشد السياحي' },
+                aboutBody: { ar: 'تقوم فكرة الموسوعة على تحويل التاريخ المصري القديم من مجرد تواريخ وأسماء جامدة إلى بطاقات هوية أثرية حية تروي حكاية كل ملك وملكة ومن كبار رجال الدولة (وزراء، مهندسين، كهنة، ومشرفي أعمال)، وتربط الشخصية بأسمائها الملكية الخمسة وصورها، وعائلتها، ومعابدها وأماكنها الأثرية، ومقابرها، وأهم تماثيلها وآثارها وأماكن عرضها الفعلية في المتاحف المصرية والعالمية.', en: 'This encyclopedia transforms ancient Egyptian history into living archaeological ID cards telling the story of every king, queen, and senior state official (viziers, architects, priests, overseers), linking their five royal names, family, temples & sites, tombs, and museum artifacts.', dual: 'بطاقات هوية أثرية حية تروي حكاية كل ملك وملكة وكبار رجال الدولة.' }
+            };
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.innerText = dict[key][lang];
+            });
+
+            document.getElementById('side-title').innerText = lang === 'en' ? 'Athar & Hikaya' : 'أثر وحكاية';
+            document.getElementById('mob-title').innerText = lang === 'en' ? 'Athar & Hikaya' : 'أثر وحكاية';
+            document.getElementById('home-search-input').placeholder = lang === 'en' ? 'Search a king, state official, temple, artifact...' : 'ابحث باسم ملك أو وزير أو معبد أو أثر أو متحف...';
+            document.getElementById('sh-search').placeholder = lang === 'en' ? 'Search inside this hall...' : 'ابحث داخل هذه القاعة...';
+            document.getElementById('ency-search').placeholder = lang === 'en' ? 'Search all fields, temples, artifacts, museums...' : 'ابحث في كل الحقول والمعابد والآثار والمتاحف...';
+
+            renderAll();
+            if (currentOpenHallId) openSingleHall(currentOpenHallId, false);
+        }
+
+        function switchTab(tabId) {
+            ['home', 'halls', 'encyclopedia', 'timeline', 'about'].forEach(t => {
+                document.getElementById('page-' + t).classList.add('hidden');
+                const dNav = document.getElementById('side-nav-' + t);
+                const mNav = document.getElementById('mob-nav-' + t);
+                if (dNav) dNav.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-900/10 transition";
+                if (mNav) mNav.className = "flex flex-col items-center gap-1";
+            });
+
+            document.getElementById('page-' + tabId).classList.remove('hidden');
+            const activeD = document.getElementById('side-nav-' + tabId);
+            const activeM = document.getElementById('mob-nav-' + tabId);
+            if (activeD) activeD.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-obsidian text-goldLight shadow transition";
+            if (activeM) activeM.className = "flex flex-col items-center gap-1 text-obsidian font-bold";
+
+            if (tabId === 'halls') closeSingleHall();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderAll();
+        }
+
+        function getTypeIcon(type) {
+            const map = { 'ملك': 'fa-crown', 'ملكة': 'fa-gem', 'وزير': 'fa-scroll', 'مهندس': 'fa-compass-drafting', 'كاهن': 'fa-ankh', 'موظف دولة': 'fa-user-tie', 'إله': 'fa-sun', 'إلهة': 'fa-moon' };
+            return map[type] || 'fa-ankh';
+        }
+
+        function getStandaloneFigures() {
+            return figures.filter(f => !(f.type === 'ملكة' && f.queenRuled === 'no'));
+        }
+
+        function updateStats() {
+            const standalone = getStandaloneFigures();
+            const eras = [...new Set(standalone.map(f => f.era).filter(Boolean))];
+            let totalArtifacts = 0;
+            figures.forEach(f => {
+                if (f.artifacts) totalArtifacts += f.artifacts.length;
+                if (f.temples) totalArtifacts += f.temples.length;
+                if (f.tombs) totalArtifacts += f.tombs.length;
+                else if (f.tomb) totalArtifacts += 1;
+            });
+
+            document.getElementById('stat-figures').innerText = standalone.length;
+            document.getElementById('stat-eras').innerText = eras.length;
+            document.getElementById('stat-artifacts').innerText = totalArtifacts;
+
+            document.getElementById('about-stat-fig').innerText = standalone.length;
+            document.getElementById('about-stat-era').innerText = eras.length;
+            document.getElementById('about-stat-art').innerText = totalArtifacts;
+        }
+
+        function renderAll() {
+            updateStats();
+            renderHomeEras();
+            renderHomeHalls();
+            renderHomeFeatured();
+            renderHomeLatest();
+            renderHallsPage();
+            renderEncyclopedia();
+            renderTimeline();
+            updateOwnerVisibility();
+        }
+
+        function renderHomeEras() {
+            const standalone = getStandaloneFigures();
+            const eraMap = new Map();
+            standalone.forEach(f => {
+                if (f.era && !eraMap.has(f.era)) {
+                    eraMap.set(f.era, { ar: f.era, en: f.eraEn || f.era, count: 0 });
+                }
+                if (f.era) eraMap.get(f.era).count++;
+            });
+
+            document.getElementById('home-eras-strip').innerHTML = Array.from(eraMap.values()).map(item => `
+                <button onclick="filterByEraFromHome('${item.ar}')" class="shrink-0 bg-white hover:bg-obsidian hover:text-goldLight border border-gold/40 px-4 py-2.5 rounded-2xl text-right shadow-sm transition group">
+                    <div class="font-bold text-xs">${tPlain(item.ar, item.en)}</div>
+                    <div class="text-[10px] text-gray-500 group-hover:text-gray-300">${item.count} ${currentLang === 'en' ? 'cards' : 'بطاقة'}</div>
+                </button>
+            `).join('');
+        }
+
+        function filterByEraFromHome(era) {
+            switchTab('encyclopedia');
+            document.getElementById('ency-filter-era').value = era;
+            renderEncyclopedia();
+        }
+
+        function handleHomeSearch(e) {
+            if (e.key === 'Enter' || e.target.value.length >= 2) {
+                const val = e.target.value;
+                switchTab('encyclopedia');
+                const encyInput = document.getElementById('ency-search');
+                encyInput.value = val;
+                encyInput.focus();
+                renderEncyclopedia();
+            }
+        }
+
+        function renderHomeHalls() {
+            document.getElementById('home-halls-grid').innerHTML = halls.map(h => {
+                const count = getHallFigures(h).length;
+                return `
+                    <div onclick="openSingleHall('${h.id}')" class="relative h-44 rounded-2xl overflow-hidden shadow-md cursor-pointer group border border-gold/30">
+                        <img src="${h.img || 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=600'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-3 right-3 left-3 text-white">
+                            <h4 class="font-title text-base font-bold text-goldLight">${tText(h.nameAr, h.nameEn)}</h4>
+                            <p class="text-[10px] text-gray-300 mt-0.5">${count} ${currentLang === 'en' ? 'cards' : 'بطاقة في القاعة'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function createCardHTML(f) {
+            const firstLocation = f.artifacts && f.artifacts[0]
+                ? tPlain(f.artifacts[0].museumAr || f.artifacts[0].museum, f.artifacts[0].museumEn)
+                : (f.temples && f.temples[0]
+                    ? tPlain(f.temples[0].locationAr || f.temples[0].nameAr, f.temples[0].locationEn || f.temples[0].nameEn)
+                    : (f.tombs && f.tombs[0] ? tPlain(f.tombs[0].nameAr, f.tombs[0].nameEn) : 'مصر القديمة'));
+            return `
+                <div onclick="openDetailModal(${f.id})" class="bg-obsidian text-papyrus rounded-3xl overflow-hidden shadow-lg hover:shadow-xl cursor-pointer border border-gold/30 flex flex-col justify-between group transition">
+                    <div>
+                        <div class="relative h-44 bg-gray-800 overflow-hidden">
+                            ${f.image ? `<img src="${f.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">` : `<div class="w-full h-full flex items-center justify-center text-gold/40 text-4xl"><i class="fa-solid ${getTypeIcon(f.type)}"></i></div>`}
+                            <span class="absolute top-3 right-3 bg-black/70 backdrop-blur text-goldLight text-[10px] px-2.5 py-1 rounded-full font-bold border border-gold/30 flex items-center gap-1">
+                                <i class="fa-solid ${getTypeIcon(f.type)}"></i> ${getTypeTranslated(f.type)}
+                            </span>
+                            <span class="absolute top-3 left-3 bg-gold text-obsidian text-[10px] px-2.5 py-0.5 rounded-full font-bold">${tPlain(f.era, f.eraEn)}</span>
+                        </div>
+                        <div class="p-4 space-y-2">
+                            <h4 class="font-title text-xl font-bold text-goldLight leading-snug">${tText(f.nameAr, f.nameEn)}</h4>
+                            <p class="text-[11px] text-gray-400">${f.dynasty || ''} ${f.timeline ? '• ' + f.timeline : ''}</p>
+                            <p class="text-xs text-gray-300 line-clamp-2 leading-relaxed">${currentLang === 'en' ? (f.storyEn || f.storyAr) : f.storyAr}</p>
+                        </div>
+                    </div>
+                    <div class="px-4 py-2.5 bg-black/30 border-t border-white/10 flex justify-between items-center text-[10px] text-goldLight">
+                        <span class="truncate max-w-[70%]"><i class="fa-solid fa-landmark ml-1"></i> ${firstLocation}</span>
+                        <span class="font-bold shrink-0">${currentLang === 'en' ? 'Open →' : 'فتح البطاقة ←'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHomeFeatured() {
+            const list = getStandaloneFigures().slice(0, 6);
+            document.getElementById('home-featured-cards').innerHTML = list.map(createCardHTML).join('');
+        }
+
+        function renderHomeLatest() {
+            const list = [...getStandaloneFigures()].reverse().slice(0, 3);
+            document.getElementById('home-latest-cards').innerHTML = list.map(createCardHTML).join('');
+        }
+
+        function getHallFigures(hall) {
+            const standalone = getStandaloneFigures();
+            if (hall.filterType === 'all') return standalone;
+            if (['وزير', 'مهندس', 'كاهن', 'موظف دولة'].includes(hall.filterType)) {
+                return standalone.filter(f => ['وزير', 'مهندس', 'كاهن', 'موظف دولة'].includes(f.type));
+            }
+            if (hall.filterType === 'إله') return standalone.filter(f => f.type === 'إله' || f.type === 'إلهة');
+            return standalone.filter(f => f.type === hall.filterType);
+        }
+
+        function renderHallsPage() {
+            document.getElementById('halls-main-grid').innerHTML = halls.map(h => {
+                const count = getHallFigures(h).length;
+                return `
+                    <div onclick="openSingleHall('${h.id}')" class="bg-white rounded-3xl overflow-hidden shadow-md border border-gold/30 cursor-pointer group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="${h.img || 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=800'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <span class="absolute bottom-3 left-3 bg-gold text-obsidian text-xs px-3 py-1 rounded-full font-bold">${count} ${currentLang === 'en' ? 'cards' : 'بطاقة'}</span>
+                        </div>
+                        <div class="p-5 space-y-1.5">
+                            <h3 class="font-title text-xl font-bold text-obsidian">${tText(h.nameAr, h.nameEn)}</h3>
+                            <p class="text-xs text-gray-600">${tText(h.desc || '', h.descEn || '')}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openSingleHall(hallId, doSwitch = true) {
+            if (doSwitch) switchTab('halls');
+            currentOpenHallId = hallId;
+            const h = halls.find(x => x.id === hallId);
+            if (!h) return;
+
+            document.getElementById('halls-main-grid').classList.add('hidden');
+            document.getElementById('single-hall-view').classList.remove('hidden');
+            document.getElementById('sh-title').innerHTML = tText(h.nameAr, h.nameEn);
+            document.getElementById('sh-desc').innerHTML = tText(h.desc || '', h.descEn || '');
+            document.getElementById('sh-add-btn').onclick = () => checkOwnerAction(() => openAddModal(h.filterType !== 'all' ? h.filterType : 'ملك'));
+            document.getElementById('sh-edit-btn').onclick = () => checkOwnerAction(() => openHallFormModal(h.id));
+            renderSingleHallCards();
+        }
+
+        function closeSingleHall() {
+            currentOpenHallId = null;
+            document.getElementById('single-hall-view').classList.add('hidden');
+            document.getElementById('halls-main-grid').classList.remove('hidden');
+        }
+
+        function renderSingleHallCards() {
+            const h = halls.find(x => x.id === currentOpenHallId);
+            if (!h) return;
+            const q = document.getElementById('sh-search').value.toLowerCase();
+            let list = getHallFigures(h).filter(f =>
+                f.nameAr.toLowerCase().includes(q) ||
+                (f.nameEn && f.nameEn.toLowerCase().includes(q)) ||
+                (f.era && f.era.toLowerCase().includes(q)) ||
+                (f.eraEn && f.eraEn.toLowerCase().includes(q))
+            );
+
+            if (list.length === 0) {
+                document.getElementById('sh-cards-grid').innerHTML = `
+                    <div class="col-span-full text-center py-10 bg-papyrus rounded-2xl border border-dashed border-gold">
+                        <p class="font-title text-lg text-gray-600">${currentLang === 'en' ? 'This hall is currently being curated' : 'هذه القاعة قيد الإعداد حالياً'}</p>
+                        <button onclick="checkOwnerAction(() => openAddModal('${h.filterType !== 'all' ? h.filterType : 'ملك'}'))" class="owner-only hidden mt-3 bg-obsidian text-goldLight px-4 py-2 rounded-xl text-xs font-bold">+ أضف أول بطاقة للقاعة</button>
+                    </div>
+                `;
+            } else {
+                document.getElementById('sh-cards-grid').innerHTML = list.map(createCardHTML).join('');
+            }
+            updateOwnerVisibility();
+        }
+
+        function renderEncyclopedia() {
+            const standalone = getStandaloneFigures();
+            const eraSelect = document.getElementById('ency-filter-era');
+            const currentEra = eraSelect.value;
+            const eraMap = new Map();
+            standalone.forEach(f => {
+                if (f.era && !eraMap.has(f.era)) eraMap.set(f.era, { ar: f.era, en: f.eraEn || f.era });
+            });
+
+            eraSelect.innerHTML = `<option value="">${currentLang === 'en' ? 'All Historical Eras' : 'كل العصور التاريخية'}</option>` +
+                Array.from(eraMap.values()).map(e => `<option value="${e.ar}" ${e.ar === currentEra ? 'selected' : ''}>${tPlain(e.ar, e.en)}</option>`).join('');
+
+            const q = document.getElementById('ency-search').value.toLowerCase();
+            const fEra = eraSelect.value;
+            const fType = document.getElementById('ency-filter-type').value;
+
+            const filtered = standalone.filter(f => {
+                const matchEra = !fEra || f.era === fEra;
+                const matchType = !fType || f.type === fType || (fType === 'إله' && f.type === 'إلهة');
+                const blob = JSON.stringify(f).toLowerCase();
+                const matchQ = !q || blob.includes(q);
+                return matchEra && matchType && matchQ;
+            });
+
+            document.getElementById('ency-count-badge').innerText = `${filtered.length} ${currentLang === 'en' ? 'cards' : 'بطاقة'}`;
+            document.getElementById('encyclopedia-grid').innerHTML = filtered.length
+                ? filtered.map(createCardHTML).join('')
+                : `<p class="col-span-full text-center py-10 text-gray-500 text-sm">${currentLang === 'en' ? 'No matching results found.' : 'لا توجد نتائج مطابقة لبحثك.'}</p>`;
+        }
+
+        function resetFilters() {
+            document.getElementById('ency-search').value = '';
+            document.getElementById('ency-filter-era').value = '';
+            document.getElementById('ency-filter-type').value = '';
+            renderEncyclopedia();
+        }
+
+        function renderTimeline() {
+            const sorted = [...getStandaloneFigures()].sort((a, b) => (a.sortYear || 0) - (b.sortYear || 0));
+            document.getElementById('timeline-list').innerHTML = sorted.map(f => `
+                <div onclick="openDetailModal(${f.id})" class="relative bg-white p-4 rounded-2xl border border-gold/30 shadow-sm hover:shadow-md cursor-pointer transition flex items-center gap-4">
+                    <div class="absolute -right-[33px] top-6 w-4 h-4 rounded-full bg-gold border-4 border-papyrus shadow"></div>
+                    ${f.image ? `<img src="${f.image}" class="w-16 h-16 rounded-2xl object-cover shrink-0 border border-gold/40">` : ''}
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="bg-obsidian text-goldLight text-[10px] px-2.5 py-0.5 rounded-full font-bold">${f.timeline || tPlain(f.era, f.eraEn)}</span>
+                            <span class="text-[11px] text-amber-800 font-bold">${tPlain(f.era, f.eraEn)} • ${f.dynasty || ''}</span>
+                        </div>
+                        <h4 class="font-title text-lg font-bold text-obsidian">${tText(f.nameAr, f.nameEn)}</h4>
+                        <p class="text-xs text-gray-600 line-clamp-1">${currentLang === 'en' ? (f.storyEn || f.storyAr) : f.storyAr}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openDetailModal(id) {
+            const f = figures.find(x => x.id === id);
+            if (!f) return;
+
+            document.getElementById('detail-owner-actions').innerHTML = `
+                <button onclick="checkOwnerAction(() => openEditModal(${f.id}))" class="bg-obsidian text-goldLight px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square"></i> تعديل البطاقة
+                </button>
+                <button onclick="checkOwnerAction(() => deleteFigure(${f.id}))" class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1.5 rounded-xl text-xs font-bold">
+                    <i class="fa-solid fa-trash"></i> حذف
+                </button>
+            `;
+
+            const wives = figures.filter(w => w.type === 'ملكة' && w.queenRuled === 'no' && Number(w.husbandId) === Number(f.id));
+            const husband = (f.type === 'ملكة' && f.queenRuled === 'no' && f.husbandId) ? figures.find(h => Number(h.id) === Number(f.husbandId)) : null;
+
+            const titlesData = f.titles || {};
+            const activeTitleGroups = titleCategories.map(cat => {
+                const items = titlesData[cat.key] || [];
+                return { ...cat, items };
+            }).filter(g => g.items.length > 0);
+
+            const templesList = f.temples && f.temples.length ? f.temples : [];
+            const tombsList = f.tombs && f.tombs.length ? f.tombs : (f.tomb ? [{ nameAr: f.tomb, nameEn: '', descAr: '', descEn: '', img: f.tombImg || '' }] : []);
+
+            document.getElementById('detail-modal-body').innerHTML = `
+                ${f.image ? `
+                    <div class="relative h-64 sm:h-72 rounded-3xl overflow-hidden shadow-lg border border-gold/40 cursor-zoom-in" onclick="openLightbox('${f.image}')">
+                        <img src="${f.image}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-papyrus via-transparent to-transparent"></div>
+                    </div>
+                ` : ''}
+
+                <div class="text-center space-y-2.5">
+                    <div class="flex justify-center flex-wrap gap-2">
+                        <span class="bg-obsidian text-goldLight text-xs px-3 py-1 rounded-full font-bold"><i class="fa-solid ${getTypeIcon(f.type)} ml-1"></i> ${getTypeTranslated(f.type)}</span>
+                        <span class="bg-amber-100 text-amber-950 text-xs px-3 py-1 rounded-full font-bold border border-gold/40">${tPlain(f.era, f.eraEn)}</span>
+                    </div>
+
+                    ${husband ? `
+                        <div class="inline-block bg-amber-50 border border-gold px-4 py-1.5 rounded-full text-xs">
+                            ${currentLang === 'en' ? 'Royal Consort of King:' : 'ملكة لم تحكم بنفسها • زوجة الملك:'}
+                            <button onclick="openDetailModal(${husband.id})" class="font-bold text-amber-900 underline">${tPlain(husband.nameAr, husband.nameEn)}</button>
+                        </div>
+                    ` : ''}
+
+                    <div class="inline-block px-8 py-2.5 cartouche-border bg-white shadow-sm">
+                        <h2 class="font-title text-2xl sm:text-3xl font-bold text-obsidian">${tText(f.nameAr, f.nameEn)}</h2>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-center">
+                    <div class="bg-white p-3 rounded-2xl border border-gold/30">
+                        <span class="text-[11px] text-gray-500 block">${currentLang === 'en' ? 'Dynasty' : 'الأسرة الحاكمة'}</span>
+                        <strong class="text-sm text-obsidian">${f.dynasty || '-'}</strong>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl border border-gold/30">
+                        <span class="text-[11px] text-gray-500 block">${currentLang === 'en' ? 'Reign / Service Period' : 'فترة الحكم / الخدمة'}</span>
+                        <strong class="text-sm text-obsidian">${f.timeline || '-'}</strong>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-2">
+                    <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('القصة والإنجازات والمناصب', 'Story, Roles & Achievements')}</h4>
+                    ${currentLang === 'en' ? `<p class="text-xs sm:text-sm text-gray-800 leading-relaxed">${f.storyEn || f.storyAr}</p>` :
+                      currentLang === 'dual' ? `<p class="text-xs sm:text-sm text-gray-800 leading-relaxed">${f.storyAr}</p>${f.storyEn ? `<p class="text-xs text-gray-500 leading-relaxed pt-2 border-t border-gray-100" dir="ltr">${f.storyEn}</p>` : ''}` :
+                      `<p class="text-xs sm:text-sm text-gray-800 leading-relaxed">${f.storyAr}</p>`}
+                </div>
+
+                ${activeTitleGroups.length ? `
+                    <div class="bg-obsidian text-papyrus p-5 rounded-2xl border border-gold/40 space-y-4">
+                        <h4 class="font-title text-lg font-bold text-goldLight">${tPlain('الأسماء الخمسة الملكية وشرح الألقاب', 'The Five Royal Names & Titles')}</h4>
+                        <div class="space-y-3">
+                            ${activeTitleGroups.map(group => `
+                                <div class="bg-white/5 p-3.5 rounded-2xl border border-white/10 space-y-2.5">
+                                    <div class="text-xs font-bold text-goldLight border-b border-white/10 pb-1.5">${tPlain(group.labelAr, group.labelEn)}</div>
+                                    <div class="space-y-2.5">
+                                        ${group.items.map(it => `
+                                            <div class="bg-black/30 p-3 rounded-xl flex flex-col sm:flex-row gap-3 items-start">
+                                                ${it.img ? `<img src="${it.img}" onclick="openLightbox('${it.img}')" class="w-16 h-16 object-contain bg-white rounded-xl border border-gold p-1 shrink-0 cursor-zoom-in">` : ''}
+                                                <div class="space-y-1 flex-1">
+                                                    ${(it.titleAr || it.titleEn) ? `<div class="font-bold text-sm text-white">${tText(it.titleAr || '', it.titleEn || '')}</div>` : ''}
+                                                    ${(it.descAr || it.descEn) ? `<p class="text-xs text-gray-300 leading-relaxed">${tText(it.descAr || '', it.descEn || '')}</p>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${(f.father || f.mother || f.spouse || f.children) ? `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('العائلة', 'Family')}</h4>
+                        <div class="grid grid-cols-2 gap-2.5 text-xs">
+                            ${f.father ? `<div class="bg-papyrus p-2.5 rounded-xl"><span class="text-gray-500 block">${tPlain('الأب', 'Father')}:</span><strong>${f.father}</strong></div>` : ''}
+                            ${f.mother ? `<div class="bg-papyrus p-2.5 rounded-xl"><span class="text-gray-500 block">${tPlain('الأم', 'Mother')}:</span><strong>${f.mother}</strong></div>` : ''}
+                            ${f.spouse ? `<div class="bg-papyrus p-2.5 rounded-xl"><span class="text-gray-500 block">${tPlain('الزوج / الزوجة', 'Spouse')}:</span><strong>${f.spouse}</strong></div>` : ''}
+                            ${f.children ? `<div class="bg-papyrus p-2.5 rounded-xl"><span class="text-gray-500 block">${tPlain('الأبناء', 'Children')}:</span><strong>${f.children}</strong></div>` : ''}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${wives.length ? `
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-gold space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-950">${tPlain('زوجاته الملكات', 'Royal Consorts')}</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            ${wives.map(w => `
+                                <div onclick="openDetailModal(${w.id})" class="bg-white p-3 rounded-xl border border-gold/40 flex items-center gap-3 cursor-pointer hover:shadow">
+                                    ${w.image ? `<img src="${w.image}" class="w-12 h-12 rounded-full object-cover border border-gold">` : ''}
+                                    <div>
+                                        <h5 class="font-bold text-sm text-obsidian">${tPlain(w.nameAr, w.nameEn)}</h5>
+                                        <p class="text-[11px] text-gray-600 line-clamp-1">${currentLang === 'en' ? (w.storyEn || w.storyAr) : w.storyAr}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${(f.artifacts && f.artifacts.length) ? `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('الآثار وأماكن عرضها بالمتاحف', 'Artifacts & Museum Displays')}</h4>
+                        <div class="space-y-3">
+                            ${f.artifacts.map(art => `
+                                <div class="bg-papyrus p-4 rounded-2xl border border-amber-900/10 flex flex-col sm:flex-row gap-3.5 items-start">
+                                    ${art.img ? `<img src="${art.img}" onclick="openLightbox('${art.img}')" class="w-24 h-24 rounded-xl object-cover shrink-0 border border-gold/40 cursor-zoom-in">` : ''}
+                                    <div class="space-y-1.5 flex-1">
+                                        <h5 class="font-bold text-sm text-obsidian">${tText(art.nameAr || art.name || '', art.nameEn || '')}</h5>
+                                        <p class="text-xs text-amber-900 font-bold"><i class="fa-solid fa-location-dot ml-1"></i> ${tPlain(art.museumAr || art.museum || '', art.museumEn || '')}</p>
+                                        ${(art.descAr || art.desc || art.descEn) ? `<p class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">${tText(art.descAr || art.desc || '', art.descEn || '')}</p>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${templesList.length ? `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('المعابد والأماكن الأثرية', 'Temples & Archaeological Sites')}</h4>
+                        <div class="space-y-3">
+                            ${templesList.map(tp => `
+                                <div class="bg-papyrus p-4 rounded-2xl border border-amber-900/10 space-y-2">
+                                    <h5 class="font-bold text-sm text-obsidian"><i class="fa-solid fa-gopuram text-gold ml-1"></i> ${tText(tp.nameAr || '', tp.nameEn || '')}</h5>
+                                    ${(tp.locationAr || tp.locationEn) ? `<p class="text-xs text-amber-900 font-bold"><i class="fa-solid fa-map-pin ml-1"></i> ${tPlain(tp.locationAr || '', tp.locationEn || '')}</p>` : ''}
+                                    ${(tp.descAr || tp.descEn) ? `<p class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">${tText(tp.descAr || '', tp.descEn || '')}</p>` : ''}
+                                    ${tp.img ? `<img src="${tp.img}" onclick="openLightbox('${tp.img}')" class="w-full h-44 object-cover rounded-2xl mt-2 cursor-zoom-in border border-gold/30">` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${tombsList.length ? `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('المقابر ومواقعها', 'Tombs & Locations')}</h4>
+                        <div class="space-y-3">
+                            ${tombsList.map(tb => `
+                                <div class="bg-papyrus p-4 rounded-2xl border border-amber-900/10 space-y-2">
+                                    <p class="text-xs sm:text-sm font-bold text-obsidian"><i class="fa-solid fa-monument text-gold ml-1"></i> ${tText(tb.nameAr || '', tb.nameEn || '')}</p>
+                                    ${(tb.descAr || tb.descEn) ? `<p class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">${tText(tb.descAr || '', tb.descEn || '')}</p>` : ''}
+                                    ${tb.img ? `<img src="${tb.img}" onclick="openLightbox('${tb.img}')" class="w-full h-44 object-cover rounded-2xl mt-2 cursor-zoom-in border border-gold/30">` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${(f.facts && f.facts.length) ? `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/30 space-y-3">
+                        <h4 class="font-title text-lg font-bold text-amber-900 pharaonic-divider">${tPlain('الحقائق العلمية', 'Archaeological Facts')}</h4>
+                        <div class="space-y-2">
+                            ${f.facts.map((fact, i) => {
+                                const fAr = typeof fact === 'string' ? fact : fact.ar;
+                                const fEn = typeof fact === 'string' ? '' : fact.en;
+                                return `
+                                    <div class="flex items-start gap-3 bg-papyrus p-3 rounded-xl text-xs">
+                                        <span class="font-classic font-bold text-gold text-sm">0${i + 1}</span>
+                                        <div class="text-gray-800 leading-relaxed flex-1">${tText(fAr, fEn)}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${(f.customSections && f.customSections.length) ? f.customSections.map(sec => `
+                    <div class="bg-white p-5 rounded-2xl border border-gold/40 space-y-2">
+                        <h4 class="font-title text-lg font-bold text-obsidian pharaonic-divider">${tText(sec.titleAr || sec.title || '', sec.titleEn || '')}</h4>
+                        <p class="text-xs sm:text-sm text-gray-800 leading-relaxed whitespace-pre-line">${tText(sec.contentAr || sec.content || '', sec.contentEn || '')}</p>
+                        ${sec.img ? `<img src="${sec.img}" onclick="openLightbox('${sec.img}')" class="w-full h-44 object-cover rounded-2xl mt-2 cursor-zoom-in">` : ''}
+                    </div>
+                `).join('') : ''}
+            `;
+
+            updateOwnerVisibility();
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() { document.getElementById('detail-modal').classList.add('hidden'); }
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function initFiveNamesBuilder(existingTitles = {}) {
+            const container = document.getElementById('five-names-builder');
+            container.innerHTML = titleCategories.map(cat => `
+                <div class="bg-white p-3.5 rounded-2xl border border-amber-900/15 space-y-2.5">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs text-obsidian">${cat.labelAr} (${cat.labelEn})</span>
+                        <button type="button" onclick="addTitleEntryRow('${cat.key}')" class="bg-obsidian text-goldLight px-2.5 py-1 rounded-lg text-[11px] font-bold">+ إضافة خانة للقب</button>
+                    </div>
+                    <div id="title-list-${cat.key}" class="space-y-2.5"></div>
+                </div>
+            `).join('');
+
+            titleCategories.forEach(cat => {
+                const items = existingTitles[cat.key] || [];
+                items.forEach(item => addTitleEntryRow(cat.key, item));
+            });
+        }
+
+        function addTitleEntryRow(catKey, data = {}) {
+            const rowId = 'timg-' + Date.now() + Math.floor(Math.random() * 1000);
+            const div = document.createElement('div');
+            div.className = `title-entry-${catKey} bg-papyrus p-3 rounded-xl border border-gold/40 space-y-2`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-amber-900">تفاصيل اللقب / الخرطوش</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-600 text-xs font-bold">حذف</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="t-titleAr border rounded-lg p-2 bg-white" placeholder="الاسم أو اللقب بالعربية" value="${data.titleAr || ''}">
+                    <input type="text" class="t-titleEn border rounded-lg p-2 bg-white" placeholder="Title in English" value="${data.titleEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <textarea class="t-descAr border rounded-lg p-2 bg-white" rows="2" placeholder="شرح اللقب ومعناه بالعربية...">${data.descAr || ''}</textarea>
+                    <textarea class="t-descEn border rounded-lg p-2 bg-white" rows="2" placeholder="Explanation in English...">${data.descEn || ''}</textarea>
+                </div>
+                <div class="flex gap-1">
+                    <input type="text" id="${rowId}" class="t-img flex-1 border rounded-lg p-2 bg-white" placeholder="رابط صورة اللقب أو ارفعها..." value="${data.img || ''}">
+                    <label class="bg-obsidian text-goldLight px-3 py-2 rounded-lg cursor-pointer font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-upload"></i> رفع
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, '${rowId}')">
+                    </label>
+                </div>
+            `;
+            document.getElementById('title-list-' + catKey).appendChild(div);
+        }
+
+        function openAddModal(defaultType = 'ملك') {
+            document.getElementById('figure-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('form-modal-title').innerText = 'إضافة بطاقة هوية أثرية جديدة';
+            document.getElementById('f-type').value = defaultType;
+            initFiveNamesBuilder({});
+            document.getElementById('form-artifacts-list').innerHTML = '';
+            document.getElementById('form-temples-list').innerHTML = '';
+            document.getElementById('form-tombs-list').innerHTML = '';
+            document.getElementById('form-facts-list').innerHTML = '';
+            document.getElementById('form-custom-sections-list').innerHTML = '';
+            addArtifactRow();
+            addTempleRow();
+            addTombRow();
+            addFactRow();
+            toggleQueenRule();
+            document.getElementById('form-modal').classList.remove('hidden');
+        }
+
+        function openEditModal(id) {
+            closeDetailModal();
+            const f = figures.find(x => x.id === id);
+            if (!f) return;
+
+            document.getElementById('edit-id').value = f.id;
+            document.getElementById('form-modal-title').innerText = 'تعديل بطاقة: ' + f.nameAr;
+            document.getElementById('f-nameAr').value = f.nameAr || '';
+            document.getElementById('f-nameEn').value = f.nameEn || '';
+            document.getElementById('f-type').value = f.type || 'ملك';
+            document.getElementById('f-era').value = f.era || '';
+            document.getElementById('f-eraEn').value = f.eraEn || '';
+            document.getElementById('f-dynasty').value = f.dynasty || '';
+            document.getElementById('f-sortYear').value = f.sortYear || '';
+            document.getElementById('f-timeline').value = f.timeline || '';
+            document.getElementById('f-image').value = f.image || '';
+            document.getElementById('f-storyAr').value = f.storyAr || '';
+            document.getElementById('f-storyEn').value = f.storyEn || '';
+            document.getElementById('f-father').value = f.father || '';
+            document.getElementById('f-mother').value = f.mother || '';
+            document.getElementById('f-spouse').value = f.spouse || '';
+            document.getElementById('f-children').value = f.children || '';
+
+            initFiveNamesBuilder(f.titles || {});
+
+            toggleQueenRule();
+            if (f.type === 'ملكة') {
+                const rVal = f.queenRuled || 'yes';
+                document.querySelector(`input[name="queenRuled"][value="${rVal}"]`).checked = true;
+                toggleQueenHusband();
+                if (f.husbandId) document.getElementById('f-husbandId').value = f.husbandId;
+            }
+
+            document.getElementById('form-artifacts-list').innerHTML = '';
+            (f.artifacts || []).forEach(a => addArtifactRow(a));
+
+            document.getElementById('form-temples-list').innerHTML = '';
+            (f.temples || []).forEach(tp => addTempleRow(tp));
+
+            document.getElementById('form-tombs-list').innerHTML = '';
+            const tombs = f.tombs && f.tombs.length ? f.tombs : (f.tomb ? [{ nameAr: f.tomb, img: f.tombImg || '' }] : []);
+            tombs.forEach(tb => addTombRow(tb));
+
+            document.getElementById('form-facts-list').innerHTML = '';
+            (f.facts || []).forEach(fact => addFactRow(fact));
+
+            document.getElementById('form-custom-sections-list').innerHTML = '';
+            (f.customSections || []).forEach(sec => addCustomSectionRow(sec));
+
+            document.getElementById('form-modal').classList.remove('hidden');
+        }
+
+        function closeFormModal() { document.getElementById('form-modal').classList.add('hidden'); }
+
+        function toggleQueenRule() {
+            const isQueen = document.getElementById('f-type').value === 'ملكة';
+            document.getElementById('queen-rule-box').classList.toggle('hidden', !isQueen);
+            if (isQueen) {
+                const kings = figures.filter(x => x.type === 'ملك');
+                document.getElementById('f-husbandId').innerHTML = kings.map(k => `<option value="${k.id}">${k.nameAr}</option>`).join('');
+            }
+        }
+
+        function toggleQueenHusband() {
+            const val = document.querySelector('input[name="queenRuled"]:checked').value;
+            document.getElementById('queen-husband-select-box').classList.toggle('hidden', val === 'yes');
+        }
+
+        function addArtifactRow(data = {}) {
+            const rowId = 'art-' + Date.now() + Math.floor(Math.random() * 100);
+            const div = document.createElement('div');
+            div.className = "art-row bg-white p-3.5 rounded-xl border border-amber-900/15 space-y-2.5 relative";
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-amber-900">تفاصيل القطعة الأثرية</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-600 text-xs font-bold">حذف</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="art-nameAr border rounded-lg p-2" placeholder="اسم الأثر بالعربية *" value="${data.nameAr || data.name || ''}">
+                    <input type="text" class="art-nameEn border rounded-lg p-2" placeholder="Artifact Name (English)" value="${data.nameEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="art-museumAr border rounded-lg p-2" placeholder="مكان العرض بالعربية (مثال: المتحف المصري)" value="${data.museumAr || data.museum || ''}">
+                    <input type="text" class="art-museumEn border rounded-lg p-2" placeholder="Museum Location (English)" value="${data.museumEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <textarea class="art-descAr w-full border rounded-lg p-2" rows="3" placeholder="شرح القطعة الأثرية وتفاصيلها الفنية بالعربية...">${data.descAr || data.desc || ''}</textarea>
+                    <textarea class="art-descEn w-full border rounded-lg p-2" rows="3" placeholder="Detailed artifact description in English...">${data.descEn || ''}</textarea>
+                </div>
+                <div class="flex gap-1">
+                    <input type="text" id="${rowId}" class="art-img flex-1 border rounded-lg p-2" placeholder="رابط صورة الأثر أو ارفعها..." value="${data.img || ''}">
+                    <label class="bg-obsidian text-goldLight px-3 py-2 rounded-lg cursor-pointer font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-upload"></i> رفع
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, '${rowId}')">
+                    </label>
+                </div>
+            `;
+            document.getElementById('form-artifacts-list').appendChild(div);
+        }
+
+        function addTempleRow(data = {}) {
+            const rowId = 'temple-' + Date.now() + Math.floor(Math.random() * 100);
+            const div = document.createElement('div');
+            div.className = "temple-row bg-white p-3.5 rounded-xl border border-amber-900/15 space-y-2.5";
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-amber-900">بيانات المعبد أو المكان الأثري</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-600 text-xs font-bold">حذف</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="temple-nameAr border rounded-lg p-2" placeholder="اسم المعبد أو المكان الأثري بالعربية *" value="${data.nameAr || ''}">
+                    <input type="text" class="temple-nameEn border rounded-lg p-2" placeholder="Temple / Site Name (English)" value="${data.nameEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="temple-locationAr border rounded-lg p-2" placeholder="الموقع / المدينة بالعربية (مثال: الأقصر، البر الغربي)" value="${data.locationAr || ''}">
+                    <input type="text" class="temple-locationEn border rounded-lg p-2" placeholder="Location / City (English)" value="${data.locationEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <textarea class="temple-descAr border rounded-lg p-2" rows="3" placeholder="شرح معماري وتاريخي للمعبد أو المكان الأثري بالعربية...">${data.descAr || ''}</textarea>
+                    <textarea class="temple-descEn border rounded-lg p-2" rows="3" placeholder="Architectural & historical description in English...">${data.descEn || ''}</textarea>
+                </div>
+                <div class="flex gap-1">
+                    <input type="text" id="${rowId}" class="temple-img flex-1 border rounded-lg p-2" placeholder="رابط صورة المعبد أو ارفعها..." value="${data.img || ''}">
+                    <label class="bg-obsidian text-goldLight px-3 py-2 rounded-lg cursor-pointer font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-upload"></i> رفع
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, '${rowId}')">
+                    </label>
+                </div>
+            `;
+            document.getElementById('form-temples-list').appendChild(div);
+        }
+
+        function addTombRow(data = {}) {
+            const rowId = 'tomb-' + Date.now() + Math.floor(Math.random() * 100);
+            const div = document.createElement('div');
+            div.className = "tomb-row bg-white p-3.5 rounded-xl border border-amber-900/15 space-y-2.5";
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-amber-900">بيانات المقبرة</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-600 text-xs font-bold">حذف</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="tomb-nameAr border rounded-lg p-2" placeholder="اسم المقبرة ومكانها بالعربية *" value="${data.nameAr || ''}">
+                    <input type="text" class="tomb-nameEn border rounded-lg p-2" placeholder="Tomb Name & Location (English)" value="${data.nameEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <textarea class="tomb-descAr border rounded-lg p-2" rows="2" placeholder="وصف المقبرة وتفاصيلها بالعربية...">${data.descAr || ''}</textarea>
+                    <textarea class="tomb-descEn border rounded-lg p-2" rows="2" placeholder="Tomb details in English...">${data.descEn || ''}</textarea>
+                </div>
+                <div class="flex gap-1">
+                    <input type="text" id="${rowId}" class="tomb-img flex-1 border rounded-lg p-2" placeholder="رابط صورة المقبرة أو ارفعها..." value="${data.img || ''}">
+                    <label class="bg-obsidian text-goldLight px-3 py-2 rounded-lg cursor-pointer font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-upload"></i> رفع
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, '${rowId}')">
+                    </label>
+                </div>
+            `;
+            document.getElementById('form-tombs-list').appendChild(div);
+        }
+
+        function addFactRow(data = '') {
+            const arVal = typeof data === 'string' ? data : (data.ar || '');
+            const enVal = typeof data === 'string' ? '' : (data.en || '');
+            const div = document.createElement('div');
+            div.className = "fact-row bg-white p-2.5 rounded-xl border border-amber-900/15 space-y-1.5";
+            div.innerHTML = `
+                <div class="flex justify-end"><button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-500 text-xs font-bold">حذف ×</button></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="fact-ar border rounded-lg p-2 bg-papyrus" placeholder="الحقيقة العلمية بالعربية..." value="${arVal}">
+                    <input type="text" class="fact-en border rounded-lg p-2 bg-papyrus" placeholder="Archaeological fact in English..." value="${enVal}">
+                </div>
+            `;
+            document.getElementById('form-facts-list').appendChild(div);
+        }
+
+        function addCustomSectionRow(data = {}) {
+            const rowId = 'sec-' + Date.now() + Math.floor(Math.random() * 100);
+            const div = document.createElement('div');
+            div.className = "sec-row bg-white p-3 rounded-xl border border-gold space-y-2";
+            div.innerHTML = `
+                <div class="flex justify-between">
+                    <span class="font-bold text-amber-900">قسم مخصص حر</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-500 font-bold">حذف</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" class="sec-titleAr border rounded-lg p-2 font-bold" placeholder="عنوان الخانة بالعربية *" value="${data.titleAr || data.title || ''}">
+                    <input type="text" class="sec-titleEn border rounded-lg p-2 font-bold" placeholder="Section Title (English)" value="${data.titleEn || ''}">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <textarea class="sec-contentAr border rounded-lg p-2" rows="2" placeholder="الشرح بالعربية...">${data.contentAr || data.content || ''}</textarea>
+                    <textarea class="sec-contentEn border rounded-lg p-2" rows="2" placeholder="Content in English...">${data.contentEn || ''}</textarea>
+                </div>
+                <div class="flex gap-1">
+                    <input type="text" id="${rowId}" class="sec-img flex-1 border rounded-lg p-2" placeholder="صورة اختيارية للخانة..." value="${data.img || ''}">
+                    <label class="bg-obsidian text-goldLight px-3 py-2 rounded-lg cursor-pointer font-bold">
+                        <i class="fa-solid fa-upload"></i>
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadImageToInput(this, '${rowId}')">
+                    </label>
+                </div>
+            `;
+            document.getElementById('form-custom-sections-list').appendChild(div);
+        }
+
+        function uploadImageToInput(fileInput, targetInputId) {
+            const file = fileInput.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById(targetInputId).value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveFigure(e) {
+            e.preventDefault();
+            const editId = document.getElementById('edit-id').value;
+            const type = document.getElementById('f-type').value;
+
+            const titles = {};
+            titleCategories.forEach(cat => {
+                titles[cat.key] = Array.from(document.querySelectorAll(`.title-entry-${cat.key}`)).map(row => ({
+                    titleAr: row.querySelector('.t-titleAr').value,
+                    titleEn: row.querySelector('.t-titleEn').value,
+                    descAr: row.querySelector('.t-descAr').value,
+                    descEn: row.querySelector('.t-descEn').value,
+                    img: row.querySelector('.t-img').value
+                })).filter(x => x.titleAr || x.titleEn || x.descAr || x.img);
+            });
+
+            const artifacts = Array.from(document.querySelectorAll('.art-row')).map(row => ({
+                nameAr: row.querySelector('.art-nameAr').value,
+                nameEn: row.querySelector('.art-nameEn').value,
+                museumAr: row.querySelector('.art-museumAr').value,
+                museumEn: row.querySelector('.art-museumEn').value,
+                descAr: row.querySelector('.art-descAr').value,
+                descEn: row.querySelector('.art-descEn').value,
+                img: row.querySelector('.art-img').value
+            })).filter(a => a.nameAr || a.nameEn);
+
+            const temples = Array.from(document.querySelectorAll('.temple-row')).map(row => ({
+                nameAr: row.querySelector('.temple-nameAr').value,
+                nameEn: row.querySelector('.temple-nameEn').value,
+                locationAr: row.querySelector('.temple-locationAr').value,
+                locationEn: row.querySelector('.temple-locationEn').value,
+                descAr: row.querySelector('.temple-descAr').value,
+                descEn: row.querySelector('.temple-descEn').value,
+                img: row.querySelector('.temple-img').value
+            })).filter(tp => tp.nameAr || tp.nameEn);
+
+            const tombs = Array.from(document.querySelectorAll('.tomb-row')).map(row => ({
+                nameAr: row.querySelector('.tomb-nameAr').value,
+                nameEn: row.querySelector('.tomb-nameEn').value,
+                descAr: row.querySelector('.tomb-descAr').value,
+                descEn: row.querySelector('.tomb-descEn').value,
+                img: row.querySelector('.tomb-img').value
+            })).filter(t => t.nameAr || t.nameEn);
+
+            const facts = Array.from(document.querySelectorAll('.fact-row')).map(row => ({
+                ar: row.querySelector('.fact-ar').value,
+                en: row.querySelector('.fact-en').value
+            })).filter(f => f.ar || f.en);
+
+            const customSections = Array.from(document.querySelectorAll('.sec-row')).map(row => ({
+                titleAr: row.querySelector('.sec-titleAr').value,
+                titleEn: row.querySelector('.sec-titleEn').value,
+                contentAr: row.querySelector('.sec-contentAr').value,
+                contentEn: row.querySelector('.sec-contentEn').value,
+                img: row.querySelector('.sec-img').value
+            })).filter(s => s.titleAr || s.titleEn);
+
+            const figObj = {
+                id: editId ? Number(editId) : Date.now(),
+                nameAr: document.getElementById('f-nameAr').value,
+                nameEn: document.getElementById('f-nameEn').value,
+                type: type,
+                queenRuled: type === 'ملكة' ? document.querySelector('input[name="queenRuled"]:checked').value : 'yes',
+                husbandId: type === 'ملكة' ? document.getElementById('f-husbandId').value : null,
+                era: document.getElementById('f-era').value,
+                eraEn: document.getElementById('f-eraEn').value,
+                dynasty: document.getElementById('f-dynasty').value,
+                sortYear: Number(document.getElementById('f-sortYear').value) || 0,
+                timeline: document.getElementById('f-timeline').value,
+                image: document.getElementById('f-image').value,
+                storyAr: document.getElementById('f-storyAr').value,
+                storyEn: document.getElementById('f-storyEn').value,
+                titles,
+                father: document.getElementById('f-father').value,
+                mother: document.getElementById('f-mother').value,
+                spouse: document.getElementById('f-spouse').value,
+                children: document.getElementById('f-children').value,
+                temples,
+                tombs,
+                artifacts,
+                facts,
+                customSections
+            };
+
+            if (editId) {
+                const idx = figures.findIndex(x => x.id === Number(editId));
+                if (idx !== -1) figures[idx] = figObj;
+            } else {
+                figures.push(figObj);
+            }
+
+            saveToStorage();
+            closeFormModal();
+            renderAll();
+            if (currentOpenHallId) openSingleHall(currentOpenHallId, false);
+        }
+
+        function deleteFigure(id) {
+            if (confirm('هل أنتِ متأكدة من حذف هذه البطاقة نهائياً؟')) {
+                figures = figures.filter(x => x.id !== id);
+                saveToStorage();
+                closeDetailModal();
+                renderAll();
+                if (currentOpenHallId) openSingleHall(currentOpenHallId, false);
+            }
+        }
+
+        function openHallFormModal(hallId = null) {
+            document.getElementById('h-id').value = hallId || '';
+            if (hallId) {
+                const h = halls.find(x => x.id === hallId);
+                document.getElementById('hall-modal-title').innerText = 'تعديل القاعة';
+                document.getElementById('h-nameAr').value = h.nameAr;
+                document.getElementById('h-nameEn').value = h.nameEn || '';
+                document.getElementById('h-desc').value = h.desc || '';
+                document.getElementById('h-descEn').value = h.descEn || '';
+                document.getElementById('h-filterType').value = h.filterType || 'all';
+                document.getElementById('h-img').value = h.img || '';
+            } else {
+                document.getElementById('hall-modal-title').innerText = 'إضافة قاعة جديدة';
+                document.getElementById('h-nameAr').value = '';
+                document.getElementById('h-nameEn').value = '';
+                document.getElementById('h-desc').value = '';
+                document.getElementById('h-descEn').value = '';
+                document.getElementById('h-img').value = '';
+            }
+            document.getElementById('hall-modal').classList.remove('hidden');
+        }
+
+        function closeHallModal() { document.getElementById('hall-modal').classList.add('hidden'); }
+
+        function saveHall(e) {
+            e.preventDefault();
+            const id = document.getElementById('h-id').value;
+            const obj = {
+                id: id || 'hall-' + Date.now(),
+                nameAr: document.getElementById('h-nameAr').value,
+                nameEn: document.getElementById('h-nameEn').value,
+                desc: document.getElementById('h-desc').value,
+                descEn: document.getElementById('h-descEn').value,
+                filterType: document.getElementById('h-filterType').value,
+                img: document.getElementById('h-img').value
+            };
+
+            if (id) {
+                const idx = halls.findIndex(x => x.id === id);
+                if (idx !== -1) halls[idx] = obj;
+            } else {
+                halls.push(obj);
+            }
+            saveToStorage();
+            closeHallModal();
+            renderAll();
+            if (currentOpenHallId) openSingleHall(currentOpenHallId, false);
+        }
+
+        function changeHeroCover() {
+            const url = prompt('الصقي رابط صورة الغلاف الجديدة للرئيسية:', document.getElementById('hero-bg-img').src);
+            if (url) {
+                document.getElementById('hero-bg-img').src = url;
+                localStorage.setItem('athar_hero_cover', url);
+            }
+        }
+
+        function openProfileModal() { document.getElementById('profile-modal').classList.remove('hidden'); }
+        function closeProfileModal() { document.getElementById('profile-modal').classList.add('hidden'); }
+
+        function updateOwnerVisibility() {
+            document.querySelectorAll('.owner-only').forEach(el => {
+                el.classList.toggle('hidden', !isOwner);
+            });
+            const badge = document.getElementById('status-badge');
+            const unlockBtn = document.getElementById('unlock-btn');
+            if (badge) {
+                if (isOwner) {
+                    badge.innerText = 'مُفعّل (أنتِ المالك)';
+                    badge.className = 'bg-green-700 text-white px-3 py-1.5 rounded-lg font-bold';
+                    if (unlockBtn) unlockBtn.innerText = 'وضع المالك مفعل حالياً ✓';
+                } else {
+                    badge.innerText = 'مغلق (وضع الزائر)';
+                    badge.className = 'bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold';
+                    if (unlockBtn) unlockBtn.innerText = 'فتح صلاحية التعديل (أدخل كلمة المرور)';
+                }
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify({ halls, figures }, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'athar-hikaya-backup.json';
+            a.click();
+        }
+
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.halls) halls = parsed.halls;
+                    if (parsed.figures) figures = parsed.figures;
+                    saveToStorage();
+                    renderAll();
+                    alert('تم استيراد بيانات الموسوعة بنجاح!');
+                    closeProfileModal();
+                } catch (err) {
+                    alert('تأكدي من اختيار ملف النسخة الاحتياطية الصحيح (.json)');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        const savedCover = localStorage.getItem('athar_hero_cover');
+        if (savedCover) document.getElementById('hero-bg-img').src = savedCover;
+
+        renderAll();
+    </script>
+</body>
+</html>
